@@ -1,0 +1,121 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { Card, CardHeader } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { CheckCircle, XCircle } from "lucide-react";
+import { Spinner } from "@/components/ui/spinner";
+import { format } from "date-fns";
+
+function ProfileHeader({ username, role, registeredAt, isVerified }) {
+  return (
+    <div className="flex items-center justify-between">
+      <div className="flex items-center space-x-4">
+        <div className="h-20 w-20 rounded-full bg-primary flex items-center justify-center text-4xl text-primary-foreground">
+          {username.charAt(0).toUpperCase()}
+        </div>
+        <div>
+          <h2 className="text-2xl font-bold">
+            {username}
+            {role && (
+              <span className="text-muted-foreground ml-2 text-lg">
+                ({role})
+              </span>
+            )}
+            <p className="text-muted-foreground text-lg">
+              Registration date: {format(new Date(registeredAt), "dd MMM yyyy")}
+            </p>
+          </h2>
+          <Badge
+            variant={isVerified ? "success" : "destructive"}
+            className="mt-1"
+          >
+            {isVerified ? (
+              <>
+                <CheckCircle className="mr-1 h-4 w-4" /> Verified
+              </>
+            ) : (
+              <>
+                <XCircle className="mr-1 h-4 w-4" /> Not Verified
+              </>
+            )}
+          </Badge>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function ProfilePage() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState({
+    username: "TheNofis",
+    role: "Admin",
+    email: "john@example.com",
+    registeredAt: 1738504633973,
+    isVerified: false,
+  });
+
+  useEffect(() => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, []);
+
+  return (
+    <main className="container max-w-2xl mx-auto py-10">
+      <Card>
+        <CardHeader>
+          {isLoading ? (
+            <div className="flex items-center justify-center">
+              <Spinner className="w-20 h-20" />
+            </div>
+          ) : (
+            <ProfileHeader
+              username={user?.username}
+              role={user?.role}
+              registeredAt={user?.registeredAt}
+              isVerified={user?.isVerified}
+            />
+          )}
+        </CardHeader>
+      </Card>
+    </main>
+  );
+}
+
+// <CardContent>
+//   <form onSubmit={onSubmit} className="space-y-4">
+//     <div className="space-y-2">
+//       <Label htmlFor="username">Username</Label>
+//       <Input
+//         id="username"
+//         name="username"
+//         defaultValue={user.username}
+//         required
+//       />
+//     </div>
+//     <div className="space-y-2">
+//       <Label htmlFor="gameUsername">Game Username</Label>
+//       <Input
+//         id="gameUsername"
+//         name="gameUsername"
+//         defaultValue={user.gameUsername}
+//       />
+//     </div>
+//     <div className="space-y-2">
+//       <Label htmlFor="email">Email</Label>
+//       <Input
+//         id="email"
+//         name="email"
+//         type="email"
+//         defaultValue={user.email}
+//         required
+//       />
+//     </div>
+//     <Button type="submit" className="w-full" disabled={isLoading}>
+//       {isLoading ? "Updating..." : "Update Profile"}
+//     </Button>
+//   </form>
+// </CardContent>

@@ -1,0 +1,24 @@
+import $api from "@/http";
+
+export default class Auth {
+  static async register({ username, email, password, ingamename }) {
+    return $api
+      .post(`user/register`, { username, email, password, ingamename })
+      .then((res) => res)
+      .catch((err) => err);
+  }
+
+  static async login({ identifier, password }) {
+    return $api
+      .get(`user/login?identifier=${identifier}&password=${password}`)
+      .then((res) => res)
+      .catch((err) => err);
+  }
+
+  static async emailVerify(emailCode) {
+    return $api
+      .patch("user/email-verify", { emailCode })
+      .then((res) => res)
+      .catch((err) => err);
+  }
+}

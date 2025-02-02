@@ -12,60 +12,75 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+
+import ServiceAuth from "@/services/Service.Auth";
+import STATUS from "@/http/status";
 
 export default function RegisterPage() {
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   async function onSubmit(event) {
     event.preventDefault();
+
     setIsLoading(true);
 
     const formData = new FormData(event.currentTarget);
     const data = {
       username: formData.get("username"),
-      gameUsername: formData.get("gameUsername"),
+      ingamename: formData.get("gameUsername"),
       email: formData.get("email"),
       password: formData.get("password"),
       confirmPassword: formData.get("confirmPassword"),
     };
 
-    try {
-      // Here you would implement your registration logic
-      console.log("Registration data:", data);
-    } catch (error) {
-      console.error("Registration error:", error);
-    } finally {
+    if (data.password !== data.confirmPassword) {
+      toast.error("Пароли не совпадают!");
       setIsLoading(false);
+      return;
     }
+
+    ServiceAuth.register(data).then((json) => {
+      setIsLoading(false);
+      if (json.status === STATUS.ERROR) return toast.error(json?.message);
+
+      toast.info(`На электронную почту ${data.email} отправлено письмо!`, {
+        autoClose: false,
+      });
+
+      router.push("/");
+    });
   }
 
   return (
     <main className="container flex min-h-screen items-center justify-center py-10">
       <Card className="w-full max-w-[400px]">
         <CardHeader>
-          <CardTitle>Register</CardTitle>
-          <CardDescription>Create your account to get started</CardDescription>
+          <CardTitle>Регистрация</CardTitle>
+          <CardDescription>Создайте свой аккаунт чтобы начать</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={onSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="username">Username on site *</Label>
+              <Label htmlFor="username">Имя пользователя</Label>
               <Input id="username" name="username" required />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="gameUsername">Game Username (Optional)</Label>
+              <Label htmlFor="gameUsername">Имя в игре </Label>
               <Input id="gameUsername" name="gameUsername" />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="email">Email *</Label>
+              <Label htmlFor="email">Почта</Label>
               <Input id="email" name="email" type="email" required />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password *</Label>
+              <Label htmlFor="password">Пароль</Label>
               <Input id="password" name="password" type="password" required />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Confirm Password *</Label>
+              <Label htmlFor="confirmPassword">Подтвердите пароль</Label>
               <Input
                 id="confirmPassword"
                 name="confirmPassword"
@@ -74,12 +89,13 @@ export default function RegisterPage() {
               />
             </div>
             <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? "Registering..." : "Register"}
+              {isLoading ? "Регистрируем..." : "Зарегистрироваться"}
             </Button>
-            <div className="text-center text-sm">
-              Already have an account?{" "}
+
+            <div className="text-sm flex items-center justify-center flex-col ">
+              <span>У вас уже есть аккаунт?</span>
               <Link href="/login" className="text-primary hover:underline">
-                Login
+                Войти
               </Link>
             </div>
           </form>

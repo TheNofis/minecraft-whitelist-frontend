@@ -1,4 +1,4 @@
-const API_URL = process.env.API_URL || "https://24dv.ddns.me/api/user/";
+const API_URL = process.env.API_URL || "http://localhost:3005/api/";
 import { getCookie } from "cookies-next";
 
 export default class $api {
@@ -14,9 +14,23 @@ export default class $api {
       })
     ).json();
   }
+
   static async get(url) {
     return await (
       await fetch(API_URL + url, {
+        headers: {
+          Authorization: getCookie("Authorization"),
+          "Content-Type": "application/json",
+        },
+      })
+    ).json();
+  }
+
+  static async patch(url, body) {
+    return await (
+      await fetch(API_URL + url, {
+        method: "PATCH",
+        body: JSON.stringify(body),
         headers: {
           Authorization: getCookie("Authorization"),
           "Content-Type": "application/json",

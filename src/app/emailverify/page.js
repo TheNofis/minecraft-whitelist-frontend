@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+
 import {
   Card,
   CardContent,
@@ -9,16 +9,41 @@ import {
 } from "@/components/ui/card";
 
 import { Spinner } from "@/components/ui/spinner";
-import { Check } from "@/components/icons/check";
 
-export default function LoginPage() {
+import { CheckCircle, XCircle } from "lucide-react";
+
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+
+import ServiceAuth from "@/services/Service.Auth";
+import STATUS from "@/http/status";
+import { setCookie } from "cookies-next";
+
+export default function EmailVerifyPage() {
   const [isLoading, setIsLoading] = useState(true);
+  const [status, setStatus] = useState(null);
+
+  const router = useRouter();
+
+  const searchParams = useSearchParams();
 
   useEffect(() => {
-    setIsLoading(true);
-    setTimeout(() => {
+    const emailCode = searchParams?.get("emailCode");
+    ServiceAuth.emailVerify(emailCode).then((json) => {
       setIsLoading(false);
-    }, 2000);
+      if (json.status === STATUS.ERROR) {
+        setStatus("error");
+        return toast.error(json?.message);
+      }
+
+      if (json.status === STATUS.SUCCESS) {
+        setStatus("success");
+        toast.success(json?.message);
+        setCookie("Authorization", `Bearer ${json?.content?.token}`);
+        return router.push("/profile");
+      }
+    });
   }, []);
 
   return (
@@ -26,23 +51,28 @@ export default function LoginPage() {
       <Card className="w-full max-w-[400px]">
         <CardHeader className="text-center">
           <CardTitle>
-            {isLoading ? "Email verifying" : "Email verifed"}
+            {isLoading
+              ? "Подтверждение почты"
+              : status === "success"
+                ? "Успешно"
+                : "Ошибка"}
           </CardTitle>
           <CardDescription>
             {isLoading
-              ? "Please wait while your Email is verified"
-              : "Your Email has been successfully confirmed"}
+              ? "Пожалуйста, подождите, пока мы подтвердим вашу почту"
+              : status === "success"
+                ? "Почта успешно подтверждена"
+                : "Ошибка подтверждения почты"}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex justify-center">
             {isLoading ? (
               <Spinner className="w-20 h-20" />
+            ) : status === "success" ? (
+              <CheckCircle className="w-20 h-20 text-green-500" />
             ) : (
-              <Check
-                className="w-20 h-20 flex justify-center"
-                color="#31C48D"
-              />
+              <XCircle className="w-20 h-20 text-red-500" />
             )}
           </div>
         </CardContent>

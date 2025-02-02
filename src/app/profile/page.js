@@ -7,6 +7,12 @@ import { CheckCircle, XCircle } from "lucide-react";
 import { Spinner } from "@/components/ui/spinner";
 import { format } from "date-fns";
 
+import ServiceUser from "@/services/Service.User";
+import STATUS from "@/http/status";
+import { toast } from "react-toastify";
+import { deleteCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
+
 function ProfileHeader({ username, role, registeredAt, isVerified }) {
   return (
     <div className="flex items-center justify-between">
@@ -23,7 +29,7 @@ function ProfileHeader({ username, role, registeredAt, isVerified }) {
               </span>
             )}
             <p className="text-muted-foreground text-lg">
-              Registration date: {format(new Date(registeredAt), "dd MMM yyyy")}
+              Дата регистрации: {format(new Date(registeredAt), "dd MMM yyyy")}
             </p>
           </h2>
           <Badge
@@ -48,19 +54,23 @@ function ProfileHeader({ username, role, registeredAt, isVerified }) {
 
 export default function ProfilePage() {
   const [isLoading, setIsLoading] = useState(true);
-  const [user, setUser] = useState({
-    username: "TheNofis",
-    role: "Admin",
-    email: "john@example.com",
-    registeredAt: 1738504633973,
-    isVerified: false,
-  });
+  const router = useRouter();
+
+  const [user, setUser] = useState({});
 
   useEffect(() => {
-    setIsLoading(true);
-    setTimeout(() => {
+    ServiceUser.profile().then((json) => {
       setIsLoading(false);
-    }, 1000);
+      if (json.status === STATUS.ERROR) {
+        toast.error(json.message);
+        deleteCookie("Authorization");
+        router.push("/login");
+      }
+
+      if (json.status === STATUS.SUCCESS) {
+        setUser(json.content);
+      }
+    });
   }, []);
 
   return (
@@ -73,10 +83,10 @@ export default function ProfilePage() {
             </div>
           ) : (
             <ProfileHeader
-              username={user?.username}
-              role={user?.role}
-              registeredAt={user?.registeredAt}
-              isVerified={user?.isVerified}
+              username={user?.profile?.username}
+              role={user?.role !== "unverified" && user?.role}
+              registeredAt={user?.profile?.register_ts}
+              isVerified={user?.role !== "unverified"}
             />
           )}
         </CardHeader>

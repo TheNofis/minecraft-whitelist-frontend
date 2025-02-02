@@ -18,7 +18,7 @@ function ProfileHeader({ username, role, registeredAt, isVerified }) {
     <div className="flex items-center justify-between">
       <div className="flex items-center space-x-4">
         <div className="h-20 w-20 rounded-full bg-primary flex items-center justify-center text-4xl text-primary-foreground">
-          {username.charAt(0).toUpperCase()}
+          {username?.charAt(0)?.toUpperCase()}
         </div>
         <div>
           <h2 className="text-2xl font-bold">
@@ -56,7 +56,13 @@ export default function ProfilePage() {
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState({
+    profile: {
+      username: "",
+      register_ts: 0,
+    },
+    role: "",
+  });
 
   useEffect(() => {
     ServiceUser.profile().then((json) => {

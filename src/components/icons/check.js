@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-const Check = ({ className }) => {
+const Check = ({ className, color = "currentColor" }) => {
   return (
     <svg
       className={cn("w-6 h-6 text-gray-800 dark:text-white", className)}
@@ -8,7 +8,7 @@ const Check = ({ className }) => {
       xmlns="http://www.w3.org/2000/svg"
       width="2 4"
       height="24"
-      fill="currentColor"
+      fill={color}
       viewBox="0 0 24 24"
     >
       <path

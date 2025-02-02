@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 
 import { Spinner } from "@/components/ui/spinner";
-import { Check } from "@/components/ui/check";
+import { Check } from "@/components/icons/check";
 
 export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(true);
@@ -25,13 +25,13 @@ export default function LoginPage() {
     <main className="container flex min-h-screen items-center justify-center py-10">
       <Card className="w-full max-w-[400px]">
         <CardHeader className="text-center">
-          {isLoading ? (
-            <CardTitle>Email verifying</CardTitle>
-          ) : (
-            <CardTitle>Email verifed</CardTitle>
-          )}
+          <CardTitle>
+            {isLoading ? "Email verifying" : "Email verifed"}
+          </CardTitle>
           <CardDescription>
-            Please wait while your Email is verified
+            {isLoading
+              ? "Please wait while your Email is verified"
+              : "Your Email has been successfully confirmed"}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -39,7 +39,10 @@ export default function LoginPage() {
             {isLoading ? (
               <Spinner className="w-20 h-20" />
             ) : (
-              <Check className="w-20 h-20 flex justify-center color-green" />
+              <Check
+                className="w-20 h-20 flex justify-center"
+                color="#31C48D"
+              />
             )}
           </div>
         </CardContent>

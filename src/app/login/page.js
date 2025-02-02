@@ -13,11 +13,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
+import { toast } from "react-toastify";
+
 export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
 
   async function onSubmit(event) {
     event.preventDefault();
+
     setIsLoading(true);
 
     const formData = new FormData(event.currentTarget);
@@ -26,14 +29,28 @@ export default function LoginPage() {
       password: formData.get("password"),
     };
 
-    try {
-      // Here you would implement your login logic
-      console.log("Login data:", data);
-    } catch (error) {
-      console.error("Login error:", error);
-    } finally {
-      setIsLoading(false);
-    }
+    toast.promise(
+      new Promise((resolve, reject) => {
+        setTimeout(() => {
+          // resolve();
+          reject();
+          setIsLoading(false);
+        }, 2000);
+      }),
+      {
+        pending: "Logging in...",
+        success: "Login successful",
+        error: "Login failed",
+      },
+    );
+
+    // try {
+    //   // Here you would implement your login logic
+    //   console.log("Login data:", data);
+    // } catch (error) {
+    //   console.error("Login error:", error);
+    // } finally {
+    // }
   }
 
   return (

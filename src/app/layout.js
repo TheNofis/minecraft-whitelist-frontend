@@ -1,5 +1,6 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { ToastContainer } from "react-toastify";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,6 +15,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${inter.className} min-h-screen bg-background text-foreground`}
       >
+        <ToastContainer theme="dark" autoClose={3000} />
         {children}
       </body>
     </html>

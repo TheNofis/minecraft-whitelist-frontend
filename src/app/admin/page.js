@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 
-// This would come from your database
 const mockUsers = [
   {
     id: 1,

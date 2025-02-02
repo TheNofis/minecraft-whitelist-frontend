@@ -92,6 +92,14 @@ export default function AdminPage() {
                       >
                         Reject
                       </Button>
+                      <Button
+                        size="sm"
+                        onClick={() => handleStatusChange(user.id, "ban")}
+                        variant="outline"
+                        className="bg-red-500/10 text-red-500 hover:bg-red-500/20 hover:text-red-500"
+                      >
+                        Ban
+                      </Button>
                     </div>
                   )}
                 </TableCell>

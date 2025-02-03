@@ -36,7 +36,6 @@ export default function AdminPage() {
         setUsers(json?.content);
         return;
       }
-      return router.push("/profile");
     });
   };
 

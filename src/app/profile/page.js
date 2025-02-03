@@ -16,6 +16,8 @@ import ServiceAuth from "@/services/Service.Auth";
 import STATUS from "@/http/status";
 
 function ProfileHeader({ username, role, registeredAt, isVerified }) {
+  const router = useRouter();
+
   const [isLoaded, setIsLoaded] = useState(true);
 
   useEffect(() => {

@@ -21,4 +21,11 @@ export default class Auth {
       .then((res) => res)
       .catch((err) => err);
   }
+
+  static async verify() {
+    return $api
+      .get(`user/verify`)
+      .then((res) => res)
+      .catch((err) => err);
+  }
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -12,96 +12,100 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 
-const mockUsers = [
-  {
-    id: 1,
-    username: "john_doe",
-    gameUsername: "JohnGamer",
-    email: "john@example.com",
-    status: "pending",
-  },
-  {
-    id: 2,
-    username: "jane_smith",
-    gameUsername: "JanePlayer",
-    email: "jane@example.com",
-    status: "pending",
-  },
-];
+import ServiceAdmin from "@/services/Service.Admin";
+import STATUS from "@/http/status";
+import { useRouter } from "next/navigation";
+
+import { toast } from "react-toastify";
 
 export default function AdminPage() {
-  const [users, setUsers] = useState(mockUsers);
+  const [users, setUsers] = useState([]);
+  const router = useRouter();
+
+  useEffect(() => {
+    ServiceAdmin.users().then((json) => {
+      if (json.status === STATUS.SUCCESS) return setUsers(json?.content);
+      return router.push("/profile");
+    });
+  }, []);
 
   const handleStatusChange = (userId, newStatus) => {
-    setUsers(
-      users.map((user) =>
-        user.id === userId ? { ...user, status: newStatus } : user,
-      ),
-    );
+    ServiceAdmin.action(userId, newStatus).then((json) => {
+      if (json.status === STATUS.SUCCESS) {
+        toast.success(json.message);
+        setUsers(json?.content);
+        return;
+      }
+      return router.push("/profile");
+    });
   };
 
   return (
     <main className="container py-10">
-      <h1 className="mb-8 text-3xl font-bold">Admin Dashboard</h1>
+      <h1 className="mb-8 text-3xl font-bold">Админ панель</h1>
       <div className="rounded-lg border bg-card">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Username</TableHead>
-              <TableHead>Game Username</TableHead>
-              <TableHead>Email</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Actions</TableHead>
+              <TableHead>Имя пользователя</TableHead>
+              <TableHead>DDNET</TableHead>
+              <TableHead>Почта</TableHead>
+              <TableHead>Статус</TableHead>
+              <TableHead>Действия</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {users.map((user) => (
               <TableRow key={user.id}>
-                <TableCell>{user.username}</TableCell>
-                <TableCell>{user.gameUsername || "-"}</TableCell>
-                <TableCell>{user.email}</TableCell>
+                <TableCell>{user?.profile?.username}</TableCell>
+                <TableCell>{user?.profile?.ingamename || "-"}</TableCell>
+                <TableCell>{user?.profile?.email}</TableCell>
                 <TableCell>
                   <Badge
                     variant={
-                      user.status === "pending"
+                      user.role === "unverified"
                         ? "outline"
-                        : user.status === "approved"
+                        : user.role !== "unverified" && user.role !== "ban"
                           ? "success"
                           : "destructive"
                     }
                   >
-                    {user.status}
+                    {user.role}
                   </Badge>
                 </TableCell>
                 <TableCell>
-                  {user.status === "pending" && (
-                    <div className="flex gap-2">
+                  <div className="flex gap-2">
+                    {user.role === "unverified" && (
                       <Button
                         size="sm"
-                        onClick={() => handleStatusChange(user.id, "approved")}
+                        onClick={() => handleStatusChange(user.id, "approve")}
                         variant="outline"
                         className="bg-green-500/10 text-green-500 hover:bg-green-500/20 hover:text-green-500"
                       >
                         Approve
                       </Button>
-                      <Button
-                        size="sm"
-                        onClick={() => handleStatusChange(user.id, "rejected")}
-                        variant="outline"
-                        className="bg-red-500/10 text-red-500 hover:bg-red-500/20 hover:text-red-500"
-                      >
-                        Reject
-                      </Button>
+                    )}
+
+                    {user?.role != "ban" ? (
                       <Button
                         size="sm"
                         onClick={() => handleStatusChange(user.id, "ban")}
                         variant="outline"
                         className="bg-red-500/10 text-red-500 hover:bg-red-500/20 hover:text-red-500"
                       >
-                        Ban
+                        ban
                       </Button>
-                    </div>
-                  )}
+                    ) : (
+                      <Button
+                        size="sm"
+                        onClick={() => handleStatusChange(user.id, "approve")}
+                        variant="outline"
+                        className="bg-green-500/10 text-green-500 hover:bg-green-500/20 hover:text-green-500"
+                      >
+                        UnBan
+                      </Button>
+                    )}
+                  </div>
                 </TableCell>
               </TableRow>
             ))}

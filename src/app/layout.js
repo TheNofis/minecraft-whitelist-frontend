@@ -9,7 +9,7 @@ export const metadata = {
   description: "Authentication system with admin panel",
 };
 
-export default async function RootLayout({ children, params }) {
+export default async function RootLayout({ children }) {
   return (
     <html lang="en" className="dark">
       <body

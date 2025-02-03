@@ -1,20 +1,31 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Card, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, XCircle } from "lucide-react";
 import { Spinner } from "@/components/ui/spinner";
-import { format } from "date-fns";
 
-import ServiceUser from "@/services/Service.User";
-import STATUS from "@/http/status";
-import { toast } from "react-toastify";
+import { useEffect, useState } from "react";
 import { deleteCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
+import { format } from "date-fns";
+import { toast } from "react-toastify";
+
+import ServiceUser from "@/services/Service.User";
+import ServiceAuth from "@/services/Service.Auth";
+import STATUS from "@/http/status";
 
 function ProfileHeader({ username, role, registeredAt, isVerified }) {
-  return (
+  const [isLoaded, setIsLoaded] = useState(true);
+
+  useEffect(() => {
+    ServiceAuth.verify().then((json) => {
+      if (json.status !== STATUS.SUCCESS) router.push("/login");
+      else setIsLoaded(true);
+    });
+  }, []);
+
+  return isLoaded&&(
     <div className="flex items-center justify-between">
       <div className="flex items-center space-x-4">
         <div className="h-20 w-20 rounded-full bg-primary flex items-center justify-center text-4xl text-primary-foreground">
@@ -48,7 +59,7 @@ function ProfileHeader({ username, role, registeredAt, isVerified }) {
           </Badge>
         </div>
       </div>
-    </div>
+    </div>,
   );
 }
 

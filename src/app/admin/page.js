@@ -29,8 +29,10 @@ export default function AdminPage() {
 
   useEffect(() => {
     ServiceAdmin.users().then((json) => {
-      if (json.status === STATUS.SUCCESS) return setUsers(json?.content);
-      else return router.push("/profile");
+      if (json.status === STATUS.SUCCESS) {
+        setUsers(json?.content);
+        return setIsLoaded(true);
+      } else return router.push("/profile");
     });
   }, []);
 

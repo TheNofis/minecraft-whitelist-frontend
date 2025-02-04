@@ -5,13 +5,18 @@ import { ToastContainer } from "react-toastify";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Auth System",
-  description: "Authentication system with admin panel",
+  title: "Mine And Tee",
+  viewport: "width=device-width, initial-scale=1",
+  description: `Присоединяйтесь к Mine And Tee
+
+Это приватному серверу Minecraft, где вы можете наслаждаться игрой с друзьями в уютной и дружелюбной атмосфере.
+Наш сервер имеет большое количество игроков, с которыми вы cможете приятно проводить время.`
 };
 
 export default async function RootLayout({ children }) {
   return (
     <html lang="en" className="dark">
+      <meta property="og:image" content="https://mineandtee.fun/logo.png"/>
       <body
         className={`${inter.className} min-h-screen bg-background text-foreground`}
       >

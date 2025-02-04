@@ -8,7 +8,7 @@
 
   "_comment": "main_page",
   "welcome": "Private Minecraft Server",
-  
+
   "_comment": "register_page",
   "register_title": "Registration",
   "register_description": "Create your account to get started",
@@ -21,7 +21,7 @@
   "confirmpassword": "Confirm Password",
   "alreadyregistered": "Already have an account?",
   "email_title": "An email with a confirmation link will be sent to your email address shortly",
-  "email_description": "Sending the email may take some time.<br />If you haven't received it, check your spam folder",
+  "email_description": "Sending the email may take some time. If you haven't received it, check your spam folder",
   "email_resend": "Resend email",
 
   "_comment": "login_page",

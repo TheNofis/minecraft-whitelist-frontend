@@ -8,7 +8,7 @@
 
   "_comment": "main_page",
   "welcome": "Прыватны Minecraft сервер",
-  
+
   "_comment": "register_page",
   "register_title": "Рэгістрацыя",
   "register_description": "Стварыце свой акаўнт, каб пачаць",
@@ -21,7 +21,7 @@
   "confirmpassword": "Пацвердзіце пароль",
   "alreadyregistered": "У вас ужо ёсць акаўнт?",
   "email_title": "На вашу электронную пошту будзе адпраўлена ліст з спасылкай для пацверджання",
-  "email_description": "Адпраўка ліста можа заняць некаторы час.<br />Калі вы не атрымалі яго, праверце спам",
+  "email_description": "Адпраўка ліста можа заняць некаторы час. Калі вы не атрымалі яго, праверце спам",
   "email_resend": "Адправіць ліст зноў",
 
   "_comment": "login_page",

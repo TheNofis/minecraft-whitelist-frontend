@@ -8,7 +8,7 @@
 
   "_comment": "main_page",
   "welcome": "Servidor privado de Minecraft",
-  
+
   "_comment": "register_page",
   "register_title": "Cadastro",
   "register_description": "Crie sua conta para começar",
@@ -21,7 +21,7 @@
   "confirmpassword": "Confirmar senha",
   "alreadyregistered": "Já tem uma conta?",
   "email_title": "Um e-mail com o link de confirmação será enviado para o seu e-mail",
-  "email_description": "O envio do e-mail pode levar algum tempo.<br />Se não recebeu, verifique a pasta de spam",
+  "email_description": "O envio do e-mail pode levar algum tempo.Se não recebeu, verifique a pasta de spam",
   "email_resend": "Reenviar e-mail",
 
   "_comment": "login_page",

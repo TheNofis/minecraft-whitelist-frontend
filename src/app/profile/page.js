@@ -15,6 +15,7 @@ import {
   Ghost,
   DoorOpen,
 } from "lucide-react";
+import { toast } from "react-toastify";
 
 import Image from "next/image";
 
@@ -22,6 +23,8 @@ import ServiceUser from "@/services/Service.User";
 import STATUS from "@/http/status";
 
 import { LanguageContext } from "@/context/LanguageContext";
+import { deleteCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
 
 function OnlineIndicator({ isOnline }) {
   return (
@@ -39,7 +42,7 @@ function OnlineIndicator({ isOnline }) {
   );
 }
 
-function ProfileCard({ user, translations }) {
+function ProfileCard({ user, translations, router }) {
   return (
     <Card className="relative overflow-hidden">
       <div className="absolute top-0 right-0 p-4">
@@ -97,7 +100,11 @@ function ProfileCard({ user, translations }) {
               </Badge>
             </div>
 
-            <Button variant="destructive" className="right">
+            <Button
+              variant="destructive"
+              className="right"
+              onClick={() => logout(router)}
+            >
               <DoorOpen className="mr-2 h-4 w-4" />
               {translations.logoutbutton}
             </Button>
@@ -149,11 +156,20 @@ function StatCard({ title, icon: Icon, color, stats, translations }) {
   );
 }
 
+const logout = (router) => {
+  deleteCookie("Authorization");
+  router.push("/login");
+};
+
 export default function ProfilePage() {
   const [isLoading, setIsLoading] = useState(true);
   const { translations } = useContext(LanguageContext);
 
+  const router = useRouter();
+
   useEffect(() => {
+    if (!translations?.toast_messages?.length) return;
+
     ServiceUser.profile().then((json) => {
       if (json.status === STATUS.SUCCESS) {
         setUser(json?.content);
@@ -171,7 +187,11 @@ export default function ProfilePage() {
     !isLoading && (
       <main className="container max-w-4xl mx-auto py-10">
         <div className="grid gap-6">
-          <ProfileCard user={user} translations={translations} />
+          <ProfileCard
+            user={user}
+            translations={translations}
+            router={router}
+          />
           {user?.role !== "unverified" && (
             <div className="grid gap-4">
               <div className="grid gap-4 md:grid-cols-2">

@@ -2,6 +2,7 @@
   "_comment": "global",
   "registerbutton": "Зарегистрироваться",
   "loginbutton": "Войти",
+  "logoutbutton": "Выход",
   "error": "Ошибка",
   "success": "Успешно",
   "changelanguage": "Изменить язык",
@@ -36,6 +37,15 @@
   "_comment": "profile_page",
   "verified": "Подтвержден",
   "unverified": "Не подтвержден",
+  "playtime": "Время игры",
+  "sessions": "Сессии",
+  "playerkills": "Убийства игрока",
+  "mobkills": "Убийства мобов",
+  "deaths": "Смерти",
+  "alltime": "Всего",
+  "monthly": "За месяц",
+  "weekly": "За неделю",
+
   "opennewpage": "Открыть в новом окне",
 
   "_comment": "emailverify",

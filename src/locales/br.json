@@ -33,7 +33,7 @@
 
   "_comment": "profile_page",
   "verified": "Verificado",
-  "unferified": "Não verificado",
+  "unverified": "Não verificado",
   "opennewpage": "Abrir em nova janela",
 
   "_comment": "emailverify",

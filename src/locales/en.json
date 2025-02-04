@@ -33,7 +33,7 @@
 
   "_comment": "profile_page",
   "verified": "Verified",
-  "unferified": "Not Verified",
+  "unverified": "Not Verified",
   "opennewpage": "Open in a new window",
 
   "_comment": "emailverify",

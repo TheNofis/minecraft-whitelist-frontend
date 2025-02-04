@@ -33,7 +33,7 @@
 
   "_comment": "profile_page",
   "verified": "Підтверджено",
-  "unferified": "Не підтверджено",
+  "unverified": "Не підтверджено",
   "opennewpage": "Відкрити в новому вікні",
 
   "_comment": "emailverify",

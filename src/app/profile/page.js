@@ -18,16 +18,24 @@ import Link from "next/link";
 
 import { LanguageContext } from "@/context/LanguageContext";
 
-function IframeMap({translations}) {
-
+function IframeMap({ translations }) {
   return (
     <Card className="mt-10">
       <CardContent>
-        <iframe src="https://mineandtee.fun/maps/vanila" className="w-full h-[400px] mt-6"/>
-        <Link href="https://mineandtee.fun/maps/vanila" target="_blank" className="text-muted-foreground hover:underline mt-2">{translations.opennewpage}</Link>
+        <iframe
+          src="https://mineandtee.fun/maps/vanila"
+          className="w-full h-[400px] mt-6"
+        />
+        <Link
+          href="https://mineandtee.fun/maps/vanila"
+          target="_blank"
+          className="text-muted-foreground hover:underline mt-2"
+        >
+          {translations.opennewpage}
+        </Link>
       </CardContent>
     </Card>
-  )
+  );
 }
 
 export default function ProfilePage() {
@@ -78,12 +86,18 @@ export default function ProfilePage() {
           )}
         </CardHeader>
       </Card>
-      <IframeMap translations={translations}/>
+      <IframeMap translations={translations} />
     </main>
   );
 }
 
-function ProfileHeader({ username, role, registeredAt, isVerified, translations }) {
+function ProfileHeader({
+  username,
+  role,
+  registeredAt,
+  isVerified,
+  translations,
+}) {
   const router = useRouter();
 
   const [isLoaded, setIsLoaded] = useState(true);
@@ -95,40 +109,44 @@ function ProfileHeader({ username, role, registeredAt, isVerified, translations 
     });
   }, []);
 
-  return isLoaded&&(
-    <div className="flex items-center justify-between">
-      <div className="flex items-center space-x-4">
-        <div className="h-20 w-20 rounded-full bg-primary flex items-center justify-center text-4xl text-primary-foreground">
-          {username?.charAt(0)?.toUpperCase()}
-        </div>
-        <div>
-          <h2 className="text-2xl font-bold">
-            {username}
-            {role && (
-              <span className="text-muted-foreground ml-2 text-lg">
-                ({role})
-              </span>
-            )}
-            <p className="text-muted-foreground text-lg">
-              {format(new Date(registeredAt), "dd MMM yyyy")}
-            </p>
-          </h2>
-          <Badge
-            variant={isVerified ? "success" : "destructive"}
-            className="mt-1"
-          >
-            {isVerified ? (
-              <>
-                <CheckCircle className="mr-1 h-4 w-4" />{translations.verified}
-              </>
-            ) : (
-              <>
-                <XCircle className="mr-1 h-4 w-4" />{translations.unverified}
-              </>
-            )}
-          </Badge>
+  return (
+    isLoaded && (
+      <div className="flex items-center justify-between">
+        <div className="flex items-center space-x-4">
+          <div className="h-20 w-20 rounded-full bg-primary flex items-center justify-center text-4xl text-primary-foreground">
+            {username?.charAt(0)?.toUpperCase()}
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold">
+              {username}
+              {role && (
+                <span className="text-muted-foreground ml-2 text-lg">
+                  ({role})
+                </span>
+              )}
+              <p className="text-muted-foreground text-lg">
+                {format(new Date(registeredAt), "dd MMM yyyy")}
+              </p>
+            </h2>
+            <Badge
+              variant={isVerified ? "success" : "destructive"}
+              className="mt-1"
+            >
+              {isVerified ? (
+                <>
+                  <CheckCircle className="mr-1 h-4 w-4" />
+                  {translations.verified}
+                </>
+              ) : (
+                <>
+                  <XCircle className="mr-1 h-4 w-4" />
+                  123
+                </>
+              )}
+            </Badge>
+          </div>
         </div>
       </div>
-    </div>
+    )
   );
 }

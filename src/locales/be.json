@@ -33,7 +33,7 @@
 
   "_comment": "profile_page",
   "verified": "Пацверджана",
-  "unferified": "Не пацверджана",
+  "unverified": "Не пацверджана",
   "opennewpage": "Адкрыць у новым акне",
 
   "_comment": "emailverify",

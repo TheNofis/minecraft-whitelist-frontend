@@ -22,6 +22,13 @@ export default class Auth {
       .catch((err) => err);
   }
 
+  static async sendEmail(email) {
+    return $api
+      .post(`user/send-email`, { email })
+      .then((res) => res)
+      .catch((err) => err);
+  }
+
   static async verify() {
     return $api
       .get(`user/verify`)

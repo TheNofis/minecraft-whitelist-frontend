@@ -27,9 +27,10 @@ const VerifyModal = ({ email, isOpen, setEmailVerifyModal, translations }) => {
   const sendMain = () => {
     ServiceAuth.sendEmail(email)
       .then((json) => {
-        if (json.status === STATUS.ERROR) return toast.error(json?.message);
+        if (json.status === STATUS.ERROR)
+          return toast.error(translations?.toast_messages[json?.code || 0]);
 
-        toast.success(`На электронную почту ${email} отправлено письмо!`, {
+        toast.success(translations.emailcodesend.replace("{email}", email), {
           autoClose: false,
         });
       })

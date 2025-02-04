@@ -24,6 +24,7 @@
   "email_description": "Sending the email may take some time. If you haven't received it, check your spam folder",
   "email_resend": "Resend email",
   "passwords_dont_match": "Passwords don't match",
+  "emailcodesend": "An email has been sent to {email}!",
 
   "_comment": "login_page",
   "login_title": "Login",
@@ -64,6 +65,8 @@
     "A confirmation message was sent to the email",
     "User updated",
     "RCON connection error",
-    "Successful authentication"
+    "Successful authentication",
+    "Token expired",
+    "Insufficient permissions"
   ]
 }

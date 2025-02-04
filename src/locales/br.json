@@ -24,6 +24,7 @@
   "email_description": "O envio do e-mail pode levar algum tempo.Se não recebeu, verifique a pasta de spam",
   "email_resend": "Reenviar e-mail",
   "passwords_dont_match": "Senhas diferentes",
+  "emailcodesend": "Um e-mail foi enviado para {email}!",
 
   "_comment": "login_page",
   "login_title": "Login",
@@ -64,6 +65,8 @@
     "Mensagem de confirmação foi enviada para o e-mail",
     "Usuário atualizado",
     "Erro de conexão com RCON",
-    "Autenticação bem-sucedida"
+    "Autenticação bem-sucedida",
+    "Token expirado",
+    "Permissões insuficientes"
   ]
 }

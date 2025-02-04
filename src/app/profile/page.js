@@ -56,10 +56,10 @@ export default function ProfilePage() {
   useEffect(() => {
     ServiceUser.profile().then((json) => {
       if (json.status === STATUS.SUCCESS) {
-        setUser(json.content);
+        setUser(json?.content);
         return setIsLoading(false);
       } else {
-        toast.error(translations?.toast_messages[json?.code]);
+        toast.error(translations?.toast_messages[json?.code || 0]);
         deleteCookie("Authorization");
         return router.push("/login");
       }

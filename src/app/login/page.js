@@ -51,8 +51,9 @@ export default function LoginPage() {
     ServiceAuth.login(data).then((json) => {
       setIsLoading(false);
 
-      if (json.status === STATUS.ERROR) return toast.error(json?.message);
-      toast.success(translations?.toast_messages[json?.code]);
+      if (json.status === STATUS.ERROR)
+        return toast.error(translations?.toast_messages[json?.code || 0]);
+      toast.success(translations?.toast_messages[json?.code || 0]);
 
       setCookie("Authorization", `Bearer ${json?.content?.token}`);
       router.push("/profile");

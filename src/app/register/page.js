@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -9,8 +8,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Modal } from "@/components/ui/modal";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -19,9 +21,55 @@ import { toast } from "react-toastify";
 import ServiceAuth from "@/services/Service.Auth";
 import STATUS from "@/http/status";
 
+const VerifyModal = ({ email, isOpen, setEmailVerifyModal }) => {
+  const sendMain = () => {
+    ServiceAuth.sendEmail(email)
+      .then((json) => {
+        if (json.status === STATUS.ERROR) return toast.error(json?.message);
+
+        toast.success(`На электронную почту ${email} отправлено письмо!`, {
+          autoClose: false,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  return (
+    <Modal
+      isOpen={isOpen}
+      className="flex flex-col gap-5"
+      title="Подтверждение почты"
+      onClose={() => {
+        setEmailVerifyModal(false);
+      }}
+    >
+      <span>
+        Сейчас на вашу почту будет отправлено письмо с ссылкой на подтверждение
+        электнонной почты
+      </span>
+
+      <span>
+        Отправка письма может занять некоторое время.
+        <br />
+        Если вы не получили письмо, проверьте папку спам
+      </span>
+
+      <Button className="mt-5" onClick={sendMain}>
+        Отправить письмо еще раз
+      </Button>
+    </Modal>
+  );
+};
+
 export default function RegisterPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+
+  const [emailVerifyModal, setEmailVerifyModal] = useState(false);
+
+  const [email, setEmail] = useState("");
 
   const router = useRouter();
 
@@ -56,11 +104,8 @@ export default function RegisterPage() {
       setIsLoading(false);
       if (json.status === STATUS.ERROR) return toast.error(json?.message);
 
-      toast.info(`На электронную почту ${data.email} отправлено письмо!`, {
-        autoClose: false,
-      });
-
-      router.push("/");
+      setEmail(data.email);
+      setEmailVerifyModal(true);
     });
   }
 
@@ -75,13 +120,18 @@ export default function RegisterPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
+            <VerifyModal
+              email={email}
+              isOpen={emailVerifyModal}
+              setEmailVerifyModal={setEmailVerifyModal}
+            />
             <form onSubmit={onSubmit} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="username">Имя пользователя</Label>
                 <Input id="username" name="username" required />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="gameUsername">Имя в игре </Label>
+                <Label htmlFor="gameUsername">Имя в игре DDNet</Label>
                 <Input id="gameUsername" name="gameUsername" />
               </div>
               <div className="space-y-2">

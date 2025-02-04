@@ -13,6 +13,12 @@ module.exports = {
       padding: "2rem",
       screens: {
         "2xl": "1400px",
+        "xl": "1200px",
+        "lg": "992px",
+        "md": "768px",
+        "sm": "576px",
+        "xs": "480px",
+        "xxs": "375px",
       },
     },
     extend: {

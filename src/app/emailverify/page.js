@@ -13,7 +13,7 @@ import { Spinner } from "@/components/ui/spinner";
 import { CheckCircle, XCircle } from "lucide-react";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 import ServiceAuth from "@/services/Service.Auth";
@@ -21,6 +21,14 @@ import STATUS from "@/http/status";
 import { setCookie } from "cookies-next";
 
 export default function EmailVerifyPage() {
+  return (
+    <Suspense>
+      <EmailVerifyPageContent />
+    </Suspense>
+  );
+}
+
+export function EmailVerifyPageContent() {
   const [isLoading, setIsLoading] = useState(true);
   const [status, setStatus] = useState(null);
 

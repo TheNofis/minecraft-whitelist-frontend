@@ -1,4 +1,4 @@
-const API_URL = process.env.API_URL || "http://localhost:3005/api/";
+const API_URL = process.env.API_URL || "https://api.mineandtee.fun/api/";
 import { getCookie } from "cookies-next";
 
 export default class $api {

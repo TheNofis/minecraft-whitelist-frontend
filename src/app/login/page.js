@@ -80,7 +80,9 @@ export default function LoginPage() {
                 <Input id="password" name="password" type="password" required />
               </div>
               <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? translations.login_inprogress : translations.loginbutton}
+                {isLoading
+                  ? translations.login_inprogress
+                  : translations.loginbutton}
               </Button>
 
               <div className="text-sm flex items-center justify-center flex-col ">

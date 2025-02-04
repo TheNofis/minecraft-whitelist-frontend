@@ -40,54 +40,55 @@ function IframeMap({ translations }) {
 
 export default function ProfilePage() {
   const [isLoading, setIsLoading] = useState(true);
+
   const router = useRouter();
 
   const { translations } = useContext(LanguageContext);
 
   const [user, setUser] = useState({
     profile: {
-      username: "",
-      register_ts: 0,
+      username: "nameless tee",
+      register_ts: Date.now(),
     },
-    role: "",
+    role: "unverified",
   });
 
   useEffect(() => {
     ServiceUser.profile().then((json) => {
-      setIsLoading(false);
-      if (json.status === STATUS.ERROR) {
-        toast.error(json.message);
-        deleteCookie("Authorization");
-        router.push("/login");
-      }
-
       if (json.status === STATUS.SUCCESS) {
         setUser(json.content);
+        return setIsLoading(false);
+      } else {
+        toast.error(json.message);
+        deleteCookie("Authorization");
+        return router.push("/login");
       }
     });
   }, []);
 
   return (
-    <main className="container max-w-2xl mx-auto py-10">
-      <Card>
-        <CardHeader>
-          {isLoading ? (
-            <div className="flex items-center justify-center">
-              <Spinner className="w-20 h-20" />
-            </div>
-          ) : (
-            <ProfileHeader
-              username={user?.profile?.username}
-              role={user?.role !== "unverified" && user?.role}
-              registeredAt={user?.profile?.register_ts}
-              isVerified={user?.role !== "unverified"}
-              translations={translations}
-            />
-          )}
-        </CardHeader>
-      </Card>
-      <IframeMap translations={translations} />
-    </main>
+    !isLoading && (
+      <main className="container max-w-2xl mx-auto py-10">
+        <Card>
+          <CardHeader>
+            {isLoading ? (
+              <div className="flex items-center justify-center">
+                <Spinner className="w-20 h-20" />
+              </div>
+            ) : (
+              <ProfileHeader
+                username={user?.profile?.username}
+                role={user?.role !== "unverified" && user?.role}
+                registeredAt={user?.profile?.register_ts}
+                isVerified={user?.role !== "unverified"}
+                translations={translations}
+              />
+            )}
+          </CardHeader>
+        </Card>
+        <IframeMap translations={translations} />
+      </main>
+    )
   );
 }
 
@@ -140,7 +141,7 @@ function ProfileHeader({
               ) : (
                 <>
                   <XCircle className="mr-1 h-4 w-4" />
-                  123
+                  {translations.unverified}
                 </>
               )}
             </Badge>

@@ -4,7 +4,7 @@ const Card = ({ className, ...props }) => {
   return (
     <div
       className={cn(
-        "rounded-lg border bg-card text-card-foreground shadow-sm",
+        "rounded-lg border bg-[rgba(0,0,0,0.75)] text-card-foreground shadow-sm opacity-90",
         className,
       )}
       {...props}

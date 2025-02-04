@@ -54,6 +54,8 @@ export default function ProfilePage() {
   });
 
   useEffect(() => {
+    if (!translations?.toast_messages?.length) return;
+
     ServiceUser.profile().then((json) => {
       if (json.status === STATUS.SUCCESS) {
         setUser(json?.content);
@@ -64,7 +66,7 @@ export default function ProfilePage() {
         return router.push("/login");
       }
     });
-  }, []);
+  }, [translations]);
 
   return (
     !isLoading && (

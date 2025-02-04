@@ -41,6 +41,8 @@ export function EmailVerifyPageContent() {
   const { translations } = useContext(LanguageContext);
 
   useEffect(() => {
+    if (!translations?.toast_messages?.length) return;
+
     const emailCode = searchParams?.get("emailCode");
     ServiceAuth.emailVerify(emailCode).then((json) => {
       setIsLoading(false);
@@ -56,7 +58,7 @@ export function EmailVerifyPageContent() {
         return router.push("/profile");
       }
     });
-  }, []);
+  }, [translations]);
 
   return (
     <main className="container flex min-h-screen items-center justify-center py-10">

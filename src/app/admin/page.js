@@ -28,13 +28,15 @@ export default function AdminPage() {
   const { translations } = useContext(LanguageContext);
 
   useEffect(() => {
+    if (!translations?.toast_messages?.length) return;
+
     ServiceAdmin.users().then((json) => {
       if (json.status === STATUS.SUCCESS) {
         setUsers(translations?.toast_messages[json?.code || 0]);
         return setIsLoaded(true);
       } else return router.push("/profile");
     });
-  }, []);
+  }, [translations]);
 
   const handleStatusChange = (userId, newStatus) => {
     ServiceAdmin.action(userId, newStatus).then((json) => {

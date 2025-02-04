@@ -31,11 +31,13 @@ export default function LoginPage() {
   const { translations } = useContext(LanguageContext);
 
   useEffect(() => {
+    if (!translations?.toast_messages?.length) return;
+
     ServiceAuth.verify().then((json) => {
       if (json.status === STATUS.SUCCESS) router.push("/profile");
       else setIsLoaded(true);
     });
-  }, []);
+  }, [translations]);
 
   async function onSubmit(event) {
     event.preventDefault();

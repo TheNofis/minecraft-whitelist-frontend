@@ -32,7 +32,7 @@ export default function AdminPage() {
 
     ServiceAdmin.users().then((json) => {
       if (json.status === STATUS.SUCCESS) {
-        setUsers(translations?.toast_messages[json?.code || 0]);
+        setUsers(json?.content);
         return setIsLoaded(true);
       } else return router.push("/profile");
     });
@@ -51,7 +51,7 @@ export default function AdminPage() {
   return (
     isLoaded && (
       <main className="container py-10">
-        <h1 className="mb-8 text-3xl font-bold">Админ панель</h1>
+        <h1 className="mb-8 text-3xl font-bold">{translations.admin_title}</h1>
         <div className="rounded-lg border bg-card">
           <Table>
             <TableHeader>

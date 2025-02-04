@@ -10,7 +10,10 @@ export default class Auth {
 
   static async login({ identifier, password }) {
     return $api
-      .get(`user/login?identifier=${identifier}&password=${password}`)
+      .post(`user/login`, {
+        identifier,
+        password,
+      })
       .then((res) => res)
       .catch((err) => err);
   }

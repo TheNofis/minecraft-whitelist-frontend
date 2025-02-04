@@ -35,7 +35,6 @@ export default function Home() {
 
   return isLoaded && (
       <main className="container flex min-h-screen flex-col items-center justify-center">
-      <>{translations.welcome}</>
       <LanguageSwitch />
         <Card className="w-full max-w-[400px]">
           <CardHeader className="text-center">
@@ -55,7 +54,7 @@ export default function Home() {
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
             <Link href="/register" className="w-full">
-              <Button className="w-full">{translations.registerbbutton}</Button>
+              <Button className="w-full">{translations.registerbutton}</Button>
             </Link>
             <Link href="/login" className="w-full">
               <Button variant="outline" className="w-full">

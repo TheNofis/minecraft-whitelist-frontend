@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -18,9 +18,13 @@ import { useRouter } from "next/navigation";
 
 import { toast } from "react-toastify";
 
+import { LanguageContext } from "@/context/LanguageContext";
+
 export default function AdminPage() {
   const [users, setUsers] = useState([]);
   const router = useRouter();
+
+  const { translations } = useContext(LanguageContext);
 
   useEffect(() => {
     ServiceAdmin.users().then((json) => {
@@ -46,11 +50,11 @@ export default function AdminPage() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Имя пользователя</TableHead>
+              <TableHead>{translations.username}</TableHead>
               <TableHead>DDNET</TableHead>
-              <TableHead>Почта</TableHead>
-              <TableHead>Статус</TableHead>
-              <TableHead>Действия</TableHead>
+              <TableHead>{translations.email}</TableHead>
+              <TableHead>{translations.status}</TableHead>
+              <TableHead>{translations.actions}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -81,7 +85,7 @@ export default function AdminPage() {
                         variant="outline"
                         className="bg-green-500/10 text-green-500 hover:bg-green-500/20 hover:text-green-500"
                       >
-                        Approve
+                        {translations.approve}
                       </Button>
                     )}
 
@@ -92,7 +96,7 @@ export default function AdminPage() {
                         variant="outline"
                         className="bg-red-500/10 text-red-500 hover:bg-red-500/20 hover:text-red-500"
                       >
-                        ban
+                        {translations.ban}
                       </Button>
                     ) : (
                       <Button
@@ -101,7 +105,7 @@ export default function AdminPage() {
                         variant="outline"
                         className="bg-green-500/10 text-green-500 hover:bg-green-500/20 hover:text-green-500"
                       >
-                        UnBan
+                        {translations.unban}
                       </Button>
                     )}
                   </div>

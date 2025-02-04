@@ -1,0 +1,53 @@
+{
+  "_comment": "global",
+  "registerbutton": "Register",
+  "loginbutton": "Log In",
+  "error": "Error",
+  "success": "Success",
+  "changelanguage": "Change language",
+
+  "_comment": "main_page",
+  "welcome": "Private Minecraft Server",
+  
+  "_comment": "register_page",
+  "register_title": "Registration",
+  "register_description": "Create your account to get started",
+  "register_inprogress": "Registering...",
+  "login": "Login",
+  "username": "Username",
+  "ingamename": "In-game name DDNet*",
+  "email": "Email",
+  "password": "Password",
+  "confirmpassword": "Confirm Password",
+  "alreadyregistered": "Already have an account?",
+  "email_title": "An email with a confirmation link will be sent to your email address shortly",
+  "email_description": "Sending the email may take some time.<br />If you haven't received it, check your spam folder",
+  "email_resend": "Resend email",
+
+  "_comment": "login_page",
+  "login_title": "Login",
+  "login_description": "Please log in to your account",
+  "login_inprogress": "Logging in...",
+  "enterusername": "Enter username or email",
+  "noaccount": "Don't have an account?",
+
+  "_comment": "profile_page",
+  "verified": "Verified",
+  "unferified": "Not Verified",
+  "opennewpage": "Open in a new window",
+
+  "_comment": "emailverify",
+  "emailverify_title": "Email Verification",
+  "emailverify_description": "Please wait while we verify your email",
+  "emailverify_resend": "Resend email",
+  "emailverify_success": "Email successfully verified",
+  "emailverify_error": "Email verification error",
+
+  "_comment": "admin_page",
+  "admin_title": "Admin Panel",
+  "status": "Status",
+  "actions": "Actions",
+  "approve": "Approve",
+  "ban": "Ban",
+  "unban": "Unban"
+}

@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { CheckCircle, XCircle } from "lucide-react";
 import { Spinner } from "@/components/ui/spinner";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { deleteCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
@@ -16,13 +16,15 @@ import ServiceAuth from "@/services/Service.Auth";
 import STATUS from "@/http/status";
 import Link from "next/link";
 
-function IframeMap(){
+import { LanguageContext } from "@/context/LanguageContext";
+
+function IframeMap({translations}) {
 
   return (
     <Card className="mt-10">
       <CardContent>
         <iframe src="https://mineandtee.fun/maps/vanila" className="w-full h-[400px] mt-6"/>
-        <Link href="https://mineandtee.fun/maps/vanila" target="_blank" className="text-muted-foreground hover:underline mt-2">Открыть в новом окне</Link>
+        <Link href="https://mineandtee.fun/maps/vanila" target="_blank" className="text-muted-foreground hover:underline mt-2">{translations.opennewpage}</Link>
       </CardContent>
     </Card>
   )
@@ -31,6 +33,8 @@ function IframeMap(){
 export default function ProfilePage() {
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
+
+  const { translations } = useContext(LanguageContext);
 
   const [user, setUser] = useState({
     profile: {
@@ -69,16 +73,17 @@ export default function ProfilePage() {
               role={user?.role !== "unverified" && user?.role}
               registeredAt={user?.profile?.register_ts}
               isVerified={user?.role !== "unverified"}
+              translations={translations}
             />
           )}
         </CardHeader>
       </Card>
-      <IframeMap/>
+      <IframeMap translations={translations}/>
     </main>
   );
 }
 
-function ProfileHeader({ username, role, registeredAt, isVerified }) {
+function ProfileHeader({ username, role, registeredAt, isVerified, translations }) {
   const router = useRouter();
 
   const [isLoaded, setIsLoaded] = useState(true);
@@ -114,11 +119,11 @@ function ProfileHeader({ username, role, registeredAt, isVerified }) {
           >
             {isVerified ? (
               <>
-                <CheckCircle className="mr-1 h-4 w-4" /> Verified
+                <CheckCircle className="mr-1 h-4 w-4" />{translations.verified}
               </>
             ) : (
               <>
-                <XCircle className="mr-1 h-4 w-4" /> Not Verified
+                <XCircle className="mr-1 h-4 w-4" />{translations.unverified}
               </>
             )}
           </Badge>

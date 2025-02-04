@@ -1,0 +1,53 @@
+{
+  "_comment": "global",
+  "registerbutton": "Cadastrar-se",
+  "loginbutton": "Entrar",
+  "error": "Erro",
+  "success": "Sucesso",
+  "changelanguage": "Alterar idioma",
+
+  "_comment": "main_page",
+  "welcome": "Servidor privado de Minecraft",
+  
+  "_comment": "register_page",
+  "register_title": "Cadastro",
+  "register_description": "Crie sua conta para começar",
+  "register_inprogress": "Registrando...",
+  "login": "Login",
+  "username": "Nome de usuário",
+  "ingamename": "Nome no jogo DDNet*",
+  "email": "E-mail",
+  "password": "Senha",
+  "confirmpassword": "Confirmar senha",
+  "alreadyregistered": "Já tem uma conta?",
+  "email_title": "Um e-mail com o link de confirmação será enviado para o seu e-mail",
+  "email_description": "O envio do e-mail pode levar algum tempo.<br />Se não recebeu, verifique a pasta de spam",
+  "email_resend": "Reenviar e-mail",
+
+  "_comment": "login_page",
+  "login_title": "Login",
+  "login_description": "Por favor, faça login na sua conta",
+  "login_inprogress": "Entrando...",
+  "enterusername": "Digite o nome de usuário ou e-mail",
+  "noaccount": "Não tem uma conta?",
+
+  "_comment": "profile_page",
+  "verified": "Verificado",
+  "unferified": "Não verificado",
+  "opennewpage": "Abrir em nova janela",
+
+  "_comment": "emailverify",
+  "emailverify_title": "Verificação de E-mail",
+  "emailverify_description": "Por favor, aguarde enquanto verificamos seu e-mail",
+  "emailverify_resend": "Reenviar e-mail",
+  "emailverify_success": "E-mail verificado com sucesso",
+  "emailverify_error": "Erro na verificação do e-mail",
+
+  "_comment": "admin_page",
+  "admin_title": "Painel de Administrador",
+  "status": "Status",
+  "actions": "Ações",
+  "approve": "Aprovar",
+  "ban": "Banir",
+  "unban": "Desbanir"
+}

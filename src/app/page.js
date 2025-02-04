@@ -10,16 +10,21 @@ import {
 } from "@/components/ui/card";
 import Link from "next/link";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useRouter } from "next/navigation";
 
 import ServiceAuth from "@/services/Service.Auth";
 import STATUS from "@/http/status";
 import Image from "next/image";
+import LanguageSwitch from "@/components/LanguageSwitch";
+
+import { LanguageContext } from "@/context/LanguageContext";
 
 export default function Home() {
   const router = useRouter();
   const [isLoaded, setIsLoaded] = useState(false);
+
+  const { translations } = useContext(LanguageContext);
 
   useEffect(() => {
     ServiceAuth.verify().then((json) => {
@@ -28,9 +33,10 @@ export default function Home() {
     });
   }, []);
 
-  return (
-    isLoaded && (
+  return isLoaded && (
       <main className="container flex min-h-screen flex-col items-center justify-center">
+      <>{translations.welcome}</>
+      <LanguageSwitch />
         <Card className="w-full max-w-[400px]">
           <CardHeader className="text-center">
             <CardTitle>
@@ -44,21 +50,21 @@ export default function Home() {
               <span>Mine And Tee</span>
             </CardTitle>
             <CardDescription>
-              <span>Приватный minecraft сервер</span>
+              <span>{translations.welcome}</span>
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
             <Link href="/register" className="w-full">
-              <Button className="w-full">Регистрация</Button>
+              <Button className="w-full">{translations.registerbbutton}</Button>
             </Link>
             <Link href="/login" className="w-full">
               <Button variant="outline" className="w-full">
-                Авторизация
+                {translations.loginbutton}
               </Button>
             </Link>
           </CardContent>
         </Card>
       </main>
     )
-  );
+  
 }

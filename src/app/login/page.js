@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,10 +21,14 @@ import STATUS from "@/http/status";
 import { setCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 
+import { LanguageContext } from "@/context/LanguageContext";
+
 export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const router = useRouter();
+
+  const { translations } = useContext(LanguageContext);
 
   useEffect(() => {
     ServiceAuth.verify().then((json) => {
@@ -60,29 +64,29 @@ export default function LoginPage() {
       <main className="container flex min-h-screen items-center justify-center py-10">
         <Card className="w-full max-w-[400px]">
           <CardHeader>
-            <CardTitle>Авторизация</CardTitle>
+            <CardTitle>{translations.login_title}</CardTitle>
             <CardDescription>
-              <span>Пожалуйста, войдите в свой аккаунт</span>
+              <span>{translations.login_description}</span>
             </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={onSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="identifier">Имя пользователя или Почта</Label>
+                <Label htmlFor="identifier">{translations.enterusername}</Label>
                 <Input id="identifier" name="identifier" required />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="password">Пароль</Label>
+                <Label htmlFor="password">{translations.password}</Label>
                 <Input id="password" name="password" type="password" required />
               </div>
               <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? "Авторизация..." : "Войти"}
+                {isLoading ? translations.login_inprogress : translations.loginbutton}
               </Button>
 
               <div className="text-sm flex items-center justify-center flex-col ">
-                <span>У вас нет аккаунта?</span>
+                <span>{translations.noaccount}</span>
                 <Link href="/register" className="text-primary hover:underline">
-                  Зарегистрироваться
+                  {translations.registerbutton}
                 </Link>
               </div>
             </form>

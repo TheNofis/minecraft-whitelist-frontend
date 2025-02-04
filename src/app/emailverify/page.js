@@ -13,12 +13,14 @@ import { Spinner } from "@/components/ui/spinner";
 import { CheckCircle, XCircle } from "lucide-react";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useState, useContext } from "react";
 import { toast } from "react-toastify";
 
 import ServiceAuth from "@/services/Service.Auth";
 import STATUS from "@/http/status";
 import { setCookie } from "cookies-next";
+
+import { LanguageContext } from "@/context/LanguageContext";
 
 export default function EmailVerifyPage() {
   return (
@@ -35,6 +37,8 @@ export function EmailVerifyPageContent() {
   const router = useRouter();
 
   const searchParams = useSearchParams();
+
+  const { translations } = useContext(LanguageContext);
 
   useEffect(() => {
     const emailCode = searchParams?.get("emailCode");
@@ -60,17 +64,17 @@ export function EmailVerifyPageContent() {
         <CardHeader className="text-center">
           <CardTitle>
             {isLoading
-              ? "Подтверждение почты"
+              ? translations.emailverify_title
               : status === "success"
-                ? "Успешно"
-                : "Ошибка"}
+                ? translations.success
+                : translations.error}
           </CardTitle>
           <CardDescription>
             {isLoading
-              ? "Пожалуйста, подождите, пока мы подтвердим вашу почту"
+              ? translations.emailverify_description
               : status === "success"
-                ? "Почта успешно подтверждена"
-                : "Ошибка подтверждения почты"}
+                ? translations.emailverify_success
+                : translations.emailverify_error}
           </CardDescription>
         </CardHeader>
         <CardContent>

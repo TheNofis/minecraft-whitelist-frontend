@@ -1,0 +1,53 @@
+{
+  "_comment": "global",
+  "registerbutton": "Зареєструватися",
+  "loginbutton": "Увійти",
+  "error": "Помилка",
+  "success": "Успішно",
+  "changelanguage": "Змінити мову",
+
+  "_comment": "main_page",
+  "welcome": "Приватний Minecraft сервер",
+  
+  "_comment": "register_page",
+  "register_title": "Реєстрація",
+  "register_description": "Створіть свій акаунт, щоб почати",
+  "register_inprogress": "Реєструємо...",
+  "login": "Авторизація",
+  "username": "Ім'я користувача",
+  "ingamename": "Ім'я в грі DDNet*",
+  "email": "Електронна пошта",
+  "password": "Пароль",
+  "confirmpassword": "Підтвердьте пароль",
+  "alreadyregistered": "Вже маєте акаунт?",
+  "email_title": "Наразі на вашу електронну пошту буде надіслано лист з посиланням для підтвердження пошти",
+  "email_description": "Відправка листа може зайняти деякий час.<br />Якщо ви не отримали лист, перевірте папку зі спамом",
+  "email_resend": "Відправити лист ще раз",
+
+  "_comment": "login_page",
+  "login_title": "Авторизація",
+  "login_description": "Будь ласка, увійдіть у свій акаунт",
+  "login_inprogress": "Авторизація...",
+  "enterusername": "Введіть ім'я користувача або електронну пошту",
+  "noaccount": "Немає акаунта?",
+
+  "_comment": "profile_page",
+  "verified": "Підтверджено",
+  "unferified": "Не підтверджено",
+  "opennewpage": "Відкрити в новому вікні",
+
+  "_comment": "emailverify",
+  "emailverify_title": "Підтвердження пошти",
+  "emailverify_description": "Будь ласка, зачекайте, поки ми підтвердимо вашу електронну пошту",
+  "emailverify_resend": "Відправити лист ще раз",
+  "emailverify_success": "Пошта успішно підтверджена",
+  "emailverify_error": "Помилка підтвердження пошти",
+
+  "_comment": "admin_page",
+  "admin_title": "Панель адміністратора",
+  "status": "Статус",
+  "actions": "Дії",
+  "approve": "Прийняти",
+  "ban": "Забанити",
+  "unban": "Розбанити"
+}

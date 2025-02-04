@@ -1,0 +1,54 @@
+{
+  "_comment": "global",
+  "registerbutton": "Зарегистрироваться",
+  "loginbutton": "Войти",
+  "error": "Ошибка",
+  "success": "Успешно",
+  "changelanguage": "Изменить язык",
+
+  "_comment": "main_page",
+  "welcome": "Приватный minecraft сервер",
+  
+  "_comment": "register_page",
+  "register_title": "Регистрация",
+  "register_description": "Создайте свой аккаунт чтобы начать",
+  "register_inprogress": "Регестрируем...",
+  "login": "Авторизация",
+  "username": "Имя пользователя",
+  "ingamename": "Имя в игре DDNet*",
+  "email": "Почта",
+  "password": "Пароль",
+  "confirmpassword": "Подтвердите пароль",
+  "alreadyregistered": "У вас уже есть аккаунт?",
+  "email_title":"Сейчас на вашу почту будет отправлено письмо с ссылкой на подтверждение электнонной почты",
+  "email_description":"Отправка письма может занять некоторое время.<br />Если вы не получили письмо, проверьте папку спам",
+  "email_resend":"Отправить письмо еще раз",
+
+  "_comment": "login_page",
+  "login_title": "Авторизация",
+  "login_description": "Пожалуйста, войдите в свой аккаунт",
+  "login_inprogress": "Авторизация...",
+  "enterusername": "Введите имя пользователя или Почта",
+  "noaccount": "У вас нет аккаунта?",
+
+  "_comment": "profile_page",
+  "verified": "Подтвержден",
+  "unferified": "Не подтвержден",
+  "opennewpage": "Открыть в новом окне",
+
+  "_comment": "emailverify",
+  "emailverify_title": "Подтверждение почты",
+  "emailverify_description": "Пожалуйста, подождите, пока мы подтвердим вашу почту",
+  "emailverify_resend":"Отправить письмо еще раз",
+  "emailverify_success": "Почта успешно подтверждена",
+  "emailverify_error": "Ошибка подтверждения почты",
+
+
+  "_comment": "adming_page",
+  "admin_title": "Панель администратора",
+  "status": "Статус",
+  "actions": "Действия",
+  "approve": "Принять",
+  "ban": "Забанить",
+  "unban": "Разбанить"
+}

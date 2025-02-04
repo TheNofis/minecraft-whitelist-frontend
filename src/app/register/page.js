@@ -14,12 +14,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Modal } from "@/components/ui/modal";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
 import ServiceAuth from "@/services/Service.Auth";
 import STATUS from "@/http/status";
+
+import { LanguageContext } from "@/context/LanguageContext";
 
 const VerifyModal = ({ email, isOpen, setEmailVerifyModal }) => {
   const sendMain = () => {
@@ -46,18 +48,15 @@ const VerifyModal = ({ email, isOpen, setEmailVerifyModal }) => {
       }}
     >
       <span>
-        Сейчас на вашу почту будет отправлено письмо с ссылкой на подтверждение
-        электнонной почты
+        {translations.email_title}
       </span>
 
       <span>
-        Отправка письма может занять некоторое время.
-        <br />
-        Если вы не получили письмо, проверьте папку спам
+        {translations.email_description}
       </span>
 
       <Button className="mt-5" onClick={sendMain}>
-        Отправить письмо еще раз
+        {translations.email_resend}
       </Button>
     </Modal>
   );
@@ -72,6 +71,8 @@ export default function RegisterPage() {
   const [email, setEmail] = useState("");
 
   const router = useRouter();
+
+  const { translations } = useContext(LanguageContext);
 
   useEffect(() => {
     ServiceAuth.verify().then((json) => {
@@ -102,7 +103,7 @@ export default function RegisterPage() {
 
     ServiceAuth.register(data).then((json) => {
       setIsLoading(false);
-      if (json.status === STATUS.ERROR) return toast.error(json?.message);
+      if (json.status !== STATUS.SUCCESS) return toast.error("Ошибка сервера или корректный логин");
 
       setEmail(data.email);
       setEmailVerifyModal(true);
@@ -114,9 +115,9 @@ export default function RegisterPage() {
       <main className="container flex min-h-screen items-center justify-center py-10">
         <Card className="w-full max-w-[400px]">
           <CardHeader>
-            <CardTitle>Регистрация</CardTitle>
+            <CardTitle>{translations.register_title}</CardTitle>
             <CardDescription>
-              Создайте свой аккаунт чтобы начать
+              {translations.register_description}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -127,23 +128,23 @@ export default function RegisterPage() {
             />
             <form onSubmit={onSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="username">Имя пользователя</Label>
-                <Input id="username" name="username" required />
+                <Label htmlFor="username">{translations.username}</Label>
+                <Input id="username" name="username" pattern="[a-zA-Z0-9_]*" required />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="gameUsername">Имя в игре DDNet</Label>
+                <Label htmlFor="gameUsername">{translations.ingamename}</Label>
                 <Input id="gameUsername" name="gameUsername" />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="email">Почта</Label>
+                <Label htmlFor="email">{translations.email}</Label>
                 <Input id="email" name="email" type="email" required />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="password">Пароль</Label>
+                <Label htmlFor="password">{translations.password}</Label>
                 <Input id="password" name="password" type="password" required />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="confirmPassword">Подтвердите пароль</Label>
+                <Label htmlFor="confirmPassword">{translations.confirmpassword}</Label>
                 <Input
                   id="confirmPassword"
                   name="confirmPassword"
@@ -152,13 +153,13 @@ export default function RegisterPage() {
                 />
               </div>
               <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? "Регистрируем..." : "Зарегистрироваться"}
+                {isLoading ? translations.register_inprogress : translations.registerbutton}
               </Button>
 
               <div className="text-sm flex items-center justify-center flex-col ">
-                <span>У вас уже есть аккаунт?</span>
+                <span>{translations.alreadyregistered}</span>
                 <Link href="/login" className="text-primary hover:underline">
-                  Войти
+                {translations.loginbutton}
                 </Link>
               </div>
             </form>

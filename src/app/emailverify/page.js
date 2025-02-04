@@ -46,12 +46,12 @@ export function EmailVerifyPageContent() {
       setIsLoading(false);
       if (json.status === STATUS.ERROR) {
         setStatus("error");
-        return toast.error(json?.message);
+        return toast.error(translations?.toast_messages[json?.code]);
       }
 
       if (json.status === STATUS.SUCCESS) {
         setStatus("success");
-        toast.success(json?.message);
+        toast.success(translations?.toast_messages[json?.code]);
         setCookie("Authorization", `Bearer ${json?.content?.token}`);
         return router.push("/profile");
       }

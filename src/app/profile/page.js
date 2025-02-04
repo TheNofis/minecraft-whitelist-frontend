@@ -59,7 +59,7 @@ export default function ProfilePage() {
         setUser(json.content);
         return setIsLoading(false);
       } else {
-        toast.error(json.message);
+        toast.error(translations?.toast_messages[json?.code]);
         deleteCookie("Authorization");
         return router.push("/login");
       }

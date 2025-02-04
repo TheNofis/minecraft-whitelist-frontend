@@ -52,7 +52,7 @@ export default function LoginPage() {
       setIsLoading(false);
 
       if (json.status === STATUS.ERROR) return toast.error(json?.message);
-      toast.success("Авторизация прошла успешно!");
+      toast.success(translations?.toast_messages[json?.code]);
 
       setCookie("Authorization", `Bearer ${json?.content?.token}`);
       router.push("/profile");

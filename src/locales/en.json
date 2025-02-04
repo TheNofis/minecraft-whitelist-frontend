@@ -23,6 +23,7 @@
   "email_title": "An email with a confirmation link will be sent to your email address shortly",
   "email_description": "Sending the email may take some time. If you haven't received it, check your spam folder",
   "email_resend": "Resend email",
+  "passwords_dont_match": "Passwords don't match",
 
   "_comment": "login_page",
   "login_title": "Login",
@@ -49,5 +50,20 @@
   "actions": "Actions",
   "approve": "Approve",
   "ban": "Ban",
-  "unban": "Unban"
+  "unban": "Unban",
+
+  "_comment": "toast",
+  "toast_messages": [
+    "Unknown error",
+    "User not found",
+    "User already registered",
+    "Successful registration",
+    "Incorrect login or password",
+    "Email not confirmed",
+    "Incorrect confirmation code",
+    "A confirmation message was sent to the email",
+    "User updated",
+    "RCON connection error",
+    "Successful authentication"
+  ]
 }

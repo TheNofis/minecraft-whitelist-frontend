@@ -30,7 +30,7 @@ export default function AdminPage() {
   useEffect(() => {
     ServiceAdmin.users().then((json) => {
       if (json.status === STATUS.SUCCESS) {
-        setUsers(json?.content);
+        setUsers(translations?.toast_messages[json?.code]);
         return setIsLoaded(true);
       } else return router.push("/profile");
     });
@@ -39,7 +39,7 @@ export default function AdminPage() {
   const handleStatusChange = (userId, newStatus) => {
     ServiceAdmin.action(userId, newStatus).then((json) => {
       if (json.status === STATUS.SUCCESS) {
-        toast.success(json.message);
+        toast.success(translations?.toast_messages[json?.code]);
         setUsers(json?.content);
         return;
       }

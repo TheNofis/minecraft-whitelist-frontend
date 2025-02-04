@@ -23,6 +23,7 @@
   "email_title": "Um e-mail com o link de confirmação será enviado para o seu e-mail",
   "email_description": "O envio do e-mail pode levar algum tempo.Se não recebeu, verifique a pasta de spam",
   "email_resend": "Reenviar e-mail",
+  "passwords_dont_match": "Senhas diferentes",
 
   "_comment": "login_page",
   "login_title": "Login",
@@ -49,5 +50,20 @@
   "actions": "Ações",
   "approve": "Aprovar",
   "ban": "Banir",
-  "unban": "Desbanir"
+  "unban": "Desbanir",
+
+  "_comment": "toast",
+  "toast_messages": [
+    "Erro desconhecido",
+    "Usuário não encontrado",
+    "Usuário já registrado",
+    "Registro bem-sucedido",
+    "Login ou senha incorretos",
+    "E-mail não confirmado",
+    "Código de confirmação incorreto",
+    "Mensagem de confirmação foi enviada para o e-mail",
+    "Usuário atualizado",
+    "Erro de conexão com RCON",
+    "Autenticação bem-sucedida"
+  ]
 }

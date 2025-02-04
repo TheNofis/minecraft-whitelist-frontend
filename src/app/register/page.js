@@ -47,13 +47,9 @@ const VerifyModal = ({ email, isOpen, setEmailVerifyModal, translations }) => {
         setEmailVerifyModal(false);
       }}
     >
-      <span>
-        {translations.email_title}
-      </span>
+      <span>{translations.email_title}</span>
 
-      <span>
-        {translations.email_description}
-      </span>
+      <span>{translations.email_description}</span>
 
       <Button className="mt-5" onClick={sendMain}>
         {translations.email_resend}
@@ -96,14 +92,14 @@ export default function RegisterPage() {
     };
 
     if (data.password !== data.confirmPassword) {
-      toast.error("Пароли не совпадают!");
-      setIsLoading(false);
-      return;
+      toast.error(translations.passwords_dont_match);
+      return setIsLoading(false);
     }
 
     ServiceAuth.register(data).then((json) => {
       setIsLoading(false);
-      if (json.status !== STATUS.SUCCESS) return toast.error("Ошибка сервера или корректный логин");
+      if (json.status !== STATUS.SUCCESS)
+        return toast.error(translations.toast_messages[json?.code]);
 
       setEmail(data.email);
       setEmailVerifyModal(true);
@@ -130,7 +126,12 @@ export default function RegisterPage() {
             <form onSubmit={onSubmit} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="username">{translations.username}</Label>
-                <Input id="username" name="username" pattern="[a-zA-Z0-9_]*" required />
+                <Input
+                  id="username"
+                  name="username"
+                  pattern="[a-zA-Z0-9_]*"
+                  required
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="gameUsername">{translations.ingamename}</Label>
@@ -145,7 +146,9 @@ export default function RegisterPage() {
                 <Input id="password" name="password" type="password" required />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="confirmPassword">{translations.confirmpassword}</Label>
+                <Label htmlFor="confirmPassword">
+                  {translations.confirmpassword}
+                </Label>
                 <Input
                   id="confirmPassword"
                   name="confirmPassword"
@@ -154,13 +157,15 @@ export default function RegisterPage() {
                 />
               </div>
               <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? translations.register_inprogress : translations.registerbutton}
+                {isLoading
+                  ? translations.register_inprogress
+                  : translations.registerbutton}
               </Button>
 
               <div className="text-sm flex items-center justify-center flex-col ">
                 <span>{translations.alreadyregistered}</span>
                 <Link href="/login" className="text-primary hover:underline">
-                {translations.loginbutton}
+                  {translations.loginbutton}
                 </Link>
               </div>
             </form>

@@ -35,7 +35,7 @@ export default function Home() {
           <CardHeader className="text-center">
             <CardTitle>
               <Image
-                src="/logo.webp"
+                src="/logo.png"
                 alt="logo"
                 width={120}
                 height={120}

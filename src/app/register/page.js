@@ -23,7 +23,7 @@ import STATUS from "@/http/status";
 
 import { LanguageContext } from "@/context/LanguageContext";
 
-const VerifyModal = ({ email, isOpen, setEmailVerifyModal }) => {
+const VerifyModal = ({ email, isOpen, setEmailVerifyModal, translations }) => {
   const sendMain = () => {
     ServiceAuth.sendEmail(email)
       .then((json) => {
@@ -42,7 +42,7 @@ const VerifyModal = ({ email, isOpen, setEmailVerifyModal }) => {
     <Modal
       isOpen={isOpen}
       className="flex flex-col gap-5"
-      title="Подтверждение почты"
+      title={translations.emailverify_title}
       onClose={() => {
         setEmailVerifyModal(false);
       }}
@@ -125,6 +125,7 @@ export default function RegisterPage() {
               email={email}
               isOpen={emailVerifyModal}
               setEmailVerifyModal={setEmailVerifyModal}
+              translations={translations}
             />
             <form onSubmit={onSubmit} className="space-y-4">
               <div className="space-y-2">

@@ -4,6 +4,7 @@ import { useContext, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "./card";
 import { Map } from "lucide-react";
 import { LanguageContext } from "@/context/LanguageContext";
+import Link from "next/link";
 
 export function MapViewer() {
   const { translations } = useContext(LanguageContext);
@@ -24,6 +25,12 @@ export function MapViewer() {
             allow="fullscreen"
           />
         </div>
+        <Link
+          className="text-sm text-muted-foreground mt-2 hover:underline"
+          href="https://mineandtee.fun/maps/vanila"
+        >
+          {translations.opennewpage}
+        </Link>
       </CardContent>
     </Card>
   );

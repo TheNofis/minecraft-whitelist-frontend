@@ -14,12 +14,16 @@ import {
   Users,
   Ghost,
   DoorOpen,
+  Server,
 } from "lucide-react";
+import { MapViewer } from "@/components/ui/map-viewer";
+
 import { toast } from "react-toastify";
 
 import Image from "next/image";
 
 import ServiceUser from "@/services/Service.User";
+import ServiceStatistics from "@/services/Service.Statistics";
 import STATUS from "@/http/status";
 
 import { LanguageContext } from "@/context/LanguageContext";
@@ -42,7 +46,10 @@ function OnlineIndicator({ isOnline }) {
   );
 }
 
-function ProfileCard({ user, translations, router }) {
+function ProfileCard({ user }) {
+  const { translations } = useContext(LanguageContext);
+  const router = useRouter();
+
   return (
     <Card className="relative overflow-hidden">
       <div className="absolute top-0 right-0 p-4">
@@ -115,7 +122,9 @@ function ProfileCard({ user, translations, router }) {
   );
 }
 
-function StatCard({ title, icon: Icon, color, stats, translations }) {
+function StatCard({ title, icon: Icon, color, stats }) {
+  const { translations } = useContext(LanguageContext);
+
   return (
     <Card>
       <CardHeader className="pb-2">
@@ -131,7 +140,7 @@ function StatCard({ title, icon: Icon, color, stats, translations }) {
               {translations.alltime}
             </div>
             <div className="text-2xl font-bold">
-              {stats?.total?.toLocaleString()}
+              {stats?.total?.toLocaleString() || 0}
             </div>
           </div>
           <div>
@@ -139,7 +148,7 @@ function StatCard({ title, icon: Icon, color, stats, translations }) {
               {translations.monthly}
             </div>
             <div className="text-2xl font-bold">
-              {stats?.monthly?.toLocaleString()}
+              {stats?.monthly?.toLocaleString() || 0}
             </div>
           </div>
           <div>
@@ -147,7 +156,78 @@ function StatCard({ title, icon: Icon, color, stats, translations }) {
               {translations.weekly}
             </div>
             <div className="text-2xl font-bold">
-              {stats?.weekly?.toLocaleString()}
+              {stats?.weekly?.toLocaleString() || 0}
+            </div>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+function ServerInfoCard({ serverInfo }) {
+  const { translations } = useContext(LanguageContext);
+
+  return (
+    <Card className="md:col-span-2">
+      <CardHeader className="pb-2">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Server className="h-5 w-5 text-blue-500" />
+            <CardTitle className="text-base">
+              {translations.serverinformation}
+            </CardTitle>
+          </div>
+          <Badge variant="outline" className="bg-green-500">
+            {translations.serveronline}
+          </Badge>
+        </div>
+      </CardHeader>
+      <CardContent>
+        <div className="grid gap-6">
+          <div className="flex flex-col sm:flex-row justify-between gap-4">
+            <div>
+              <div className="text-sm font-medium text-muted-foreground mb-1">
+                {translations.servername}
+              </div>
+              <div className="text-2xl font-bold">Mine And Tee</div>
+              <div className="text-sm text-muted-foreground mt-1">Vanila</div>
+            </div>
+            <div className="flex flex-col items-start sm:items-end">
+              <div className="text-sm font-medium text-muted-foreground mb-1">
+                {translations.serveraddress}
+              </div>
+              <div className="flex items-center gap-2">
+                <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-base font-semibold">
+                  play.mineandtee.fun
+                </code>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-8 text-xs"
+                  onClick={() =>
+                    navigator.clipboard.writeText("play.mineandtee.fun")
+                  }
+                >
+                  {translations.servercopy}
+                </Button>
+              </div>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+            <div>
+              <div className="text-sm font-medium text-muted-foreground mb-1">
+                {translations.serveronline}
+              </div>
+              <div className="text-2xl font-bold">
+                {serverInfo?.online_players || 0}/200
+              </div>
+            </div>
+            <div>
+              <div className="text-sm font-medium text-muted-foreground mb-1">
+                {translations.serverversion}
+              </div>
+              <div className="text-2xl font-bold">1.21.4</div>
             </div>
           </div>
         </div>
@@ -163,6 +243,8 @@ const logout = (router) => {
 
 export default function ProfilePage() {
   const [isLoading, setIsLoading] = useState(true);
+  const [serverInfo, setServerInfo] = useState({});
+  const [user, setUser] = useState();
   const { translations } = useContext(LanguageContext);
 
   const router = useRouter();
@@ -180,40 +262,38 @@ export default function ProfilePage() {
         return router.push("/login");
       }
     });
+
+    ServiceStatistics.server().then((json) => {
+      if (json.status === STATUS.SUCCESS) return setServerInfo(json?.content);
+    });
   }, [translations]);
 
-  const [user, setUser] = useState();
   return (
     !isLoading && (
       <main className="container max-w-4xl mx-auto py-10">
         <div className="grid gap-6">
-          <ProfileCard
-            user={user}
-            translations={translations}
-            router={router}
-          />
+          <ProfileCard user={user} />
           {user?.role !== "unverified" && (
             <div className="grid gap-4">
               <div className="grid gap-4 md:grid-cols-2">
+                <ServerInfoCard serverInfo={serverInfo} />
+                <MapViewer />
                 <StatCard
                   title={translations.playerkills}
                   icon={Sword}
                   color="text-red-500"
                   stats={user?.stats?.player_kill}
-                  translations={translations}
                 />
                 <StatCard
                   title={translations.deaths}
                   icon={Skull}
                   color="text-pink-500"
                   stats={user?.stats?.player_death}
-                  translations={translations}
                 />
                 <StatCard
                   title={translations.mobkills}
                   icon={Ghost}
                   color="text-purple-500"
-                  stats={user?.stats?.mob_kill}
                   translations={translations}
                 />
                 <StatCard
@@ -221,14 +301,12 @@ export default function ProfilePage() {
                   icon={Timer}
                   color="text-green-500"
                   stats={user?.stats?.online_activity}
-                  translations={translations}
                 />
                 <StatCard
                   title={translations.sessions}
                   icon={Users}
                   color="text-blue-500"
                   stats={user?.stats?.session_count}
-                  translations={translations}
                 />
               </div>
             </div>

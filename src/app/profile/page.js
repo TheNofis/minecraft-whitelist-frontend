@@ -62,11 +62,12 @@ function ProfileCard({ user }) {
         <div className="flex items-start gap-6">
           <div className="relative">
             <Image
-              src={`https://crafatar.com/avatars/${user?.uuid || "8667ba71b85a4004af54457a9734eed7"}`}
+              src={`https://minotar.net/armor/bust/${user?.profile?.username}/100.png`}
               alt={user?.profile?.username}
               width={100}
               height={100}
-              className="rounded-lg border-2 border-primary/10"
+              className="rounded-lg"
+              // className="rounded-lg border-2 border-primary/10"
             />
             <OnlineIndicator isOnline={user.stats?.online} />
           </div>
@@ -294,7 +295,7 @@ export default function ProfilePage() {
                   title={translations.mobkills}
                   icon={Ghost}
                   color="text-purple-500"
-                  translations={translations}
+                  stats={user?.stats?.mob_kill}
                 />
                 <StatCard
                   title={translations.playtime}

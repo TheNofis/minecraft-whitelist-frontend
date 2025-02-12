@@ -15,8 +15,10 @@ import {
   Ghost,
   DoorOpen,
   Server,
+  User,
 } from "lucide-react";
 import { MapViewer } from "@/components/ui/map-viewer";
+import { SkinPickerModal } from "@/components/ui/skin-picker-modal";
 
 import { toast } from "react-toastify";
 
@@ -46,7 +48,7 @@ function OnlineIndicator({ isOnline }) {
   );
 }
 
-function ProfileCard({ user }) {
+function ProfileCard({ user, setIsSkinModalOpen }) {
   const { translations } = useContext(LanguageContext);
   const router = useRouter();
 
@@ -60,15 +62,21 @@ function ProfileCard({ user }) {
       </div>
       <CardContent className="pt-6">
         <div className="flex items-start gap-6">
-          <div className="relative">
+          <div className="relative group">
             <Image
               src={`https://minotar.net/armor/bust/${user?.profile?.username}/100.png`}
               alt={user?.profile?.username}
               width={100}
               height={100}
-              className="rounded-lg"
+              className="rounded-lg transition-transform group-hover:scale-105"
               // className="rounded-lg border-2 border-primary/10"
             />
+            <button
+              onClick={() => setIsSkinModalOpen(true)}
+              className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity rounded-lg"
+            >
+              <User className="w-6 h-6" />
+            </button>
             <OnlineIndicator isOnline={user.stats?.online} />
           </div>
           <div className="space-y-1 flex-1">
@@ -269,11 +277,13 @@ export default function ProfilePage() {
     });
   }, [translations]);
 
+  const [isSkinModalOpen, setIsSkinModalOpen] = useState(false);
+
   return (
     !isLoading && (
       <main className="container max-w-4xl mx-auto py-10">
         <div className="grid gap-6">
-          <ProfileCard user={user} />
+          <ProfileCard user={user} setIsSkinModalOpen={setIsSkinModalOpen} />
           {user?.role !== "unverified" && (
             <div className="grid gap-4">
               <div className="grid gap-4 md:grid-cols-2">
@@ -313,6 +323,12 @@ export default function ProfilePage() {
             </div>
           )}
         </div>
+
+        <SkinPickerModal
+          isOpen={isSkinModalOpen}
+          onClose={() => setIsSkinModalOpen(false)}
+          currentUsername={user?.profile?.username}
+        />
       </main>
     )
   );

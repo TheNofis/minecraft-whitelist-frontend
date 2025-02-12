@@ -36,13 +36,14 @@ export function Modal({ isOpen, onClose, title, children, className }) {
         className={cn(
           "relative w-full max-w-lg rounded-lg border bg-card p-6 shadow-lg",
           "animate-in fade-in-0 zoom-in-95",
+          className,
         )}
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
         aria-labelledby={title ? "modal-title" : undefined}
       >
-        <div className="flex justify-between">
+        <div className="flex items-start justify-between">
           {title && (
             <h2 id="modal-title" className="text-lg font-semibold">
               {title}
@@ -58,8 +59,7 @@ export function Modal({ isOpen, onClose, title, children, className }) {
             <X className="h-4 w-4" />
           </Button>
         </div>
-
-        <div className={cn("mt-4", className)}>{children}</div>
+        <div className="mt-4">{children}</div>
       </div>
     </div>
   );

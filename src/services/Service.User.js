@@ -7,4 +7,11 @@ export default class User {
       .then((res) => res)
       .catch((err) => err);
   }
+
+  static async changeskin(skin) {
+    return $api
+      .patch(`user/changeskin`, { skin })
+      .then((res) => res)
+      .catch((err) => err);
+  }
 }

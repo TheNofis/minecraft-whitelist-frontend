@@ -6,6 +6,7 @@
   "error": "Ошибка",
   "success": "Успешно",
   "changelanguage": "Изменить язык",
+  "cancel": "Отменить",
 
   "_comment": "main_page",
   "welcome": "Приватный minecraft сервер",
@@ -52,8 +53,13 @@
   "alltime": "Всего",
   "monthly": "За месяц",
   "weekly": "За неделю",
-
   "opennewpage": "Открыть в новом окне",
+  "skin_title": "Изменить скин",
+  "minecraft_username": "Имя скина в Minecraft",
+  "enter_minecraft_username": "Введите имя скина в Minecraft",
+  "preview": "Предпросмотр",
+  "apply": "Применить",
+  "applyinprogress": "Применяем...",
 
   "_comment": "emailverify",
   "emailverify_title": "Подтверждение почты",

@@ -34,10 +34,12 @@ export function SkinPickerModal({ isOpen, onClose, currentUsername }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    handlePreview();
     setIsLoading(true);
     ServiceUser.changeskin(username).then((json) => {
       if (json.status === STATUS.SUCCESS) {
         setSkinPreviewUrl(`https://minotar.net/armor/body/${username}/100.png`);
+        toast.success(translations?.toast_messages[json?.code || 0]);
         setIsLoading(false);
       } else toast.error(translations?.toast_messages[json?.code || 0]);
 

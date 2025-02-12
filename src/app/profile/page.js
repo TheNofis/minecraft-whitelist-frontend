@@ -64,8 +64,8 @@ function ProfileCard({ user, setIsSkinModalOpen }) {
         <div className="flex items-start gap-6">
           <div className="relative group">
             <Image
-              src={`https://minotar.net/armor/bust/${user?.profile?.username}/100.png`}
-              alt={user?.profile?.username}
+              src={`https://minotar.net/armor/bust/${user?.profile?.avatar || user?.profile?.username}/100.png`}
+              alt={user?.profile?.avatar || user?.profile?.username}
               width={100}
               height={100}
               className="rounded-lg transition-transform group-hover:scale-105"
@@ -327,7 +327,7 @@ export default function ProfilePage() {
         <SkinPickerModal
           isOpen={isSkinModalOpen}
           onClose={() => setIsSkinModalOpen(false)}
-          currentUsername={user?.profile?.username}
+          currentUsername={user?.profile?.avatar || user?.profile?.username}
         />
       </main>
     )

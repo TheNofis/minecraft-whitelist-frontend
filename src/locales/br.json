@@ -90,6 +90,7 @@
     "Erro de conexão com RCON",
     "Autenticação bem-sucedida",
     "Token expirado",
-    "Permissões insuficientes"
+    "Permissões insuficientes",
+    "Skin alterado com sucesso"
   ]
 }

@@ -50,9 +50,11 @@ const VerifyModal = ({ email, isOpen, setEmailVerifyModal, translations }) => {
     >
       <span>{translations.email_title}</span>
 
-      <span>{translations.email_description}</span>
+      <span className="text-sm text-muted-foreground">
+        {translations.email_description}
+      </span>
 
-      <Button className="mt-5" onClick={sendMain}>
+      <Button className="" onClick={sendMain}>
         {translations.email_resend}
       </Button>
     </Modal>
@@ -63,7 +65,7 @@ export default function RegisterPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  const [emailVerifyModal, setEmailVerifyModal] = useState(false);
+  const [emailVerifyModal, setEmailVerifyModal] = useState(true);
 
   const [email, setEmail] = useState("");
 

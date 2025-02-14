@@ -49,7 +49,6 @@ export default function AdminPage() {
     })();
 
     response.then((json) => {
-      console.log(json);
       if (json.status === STATUS.SUCCESS) {
         toast.success(translations?.toast_messages[json?.code || 100]);
         setUsers(json?.content);

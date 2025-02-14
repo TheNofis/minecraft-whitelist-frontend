@@ -28,8 +28,6 @@ export default function AdminPage() {
   const { translations } = useContext(LanguageContext);
 
   useEffect(() => {
-    if (!translations?.toast_messages?.length) return;
-
     ServiceAdmin.users().then((json) => {
       if (json.status === STATUS.SUCCESS) {
         setUsers(json?.content);
@@ -38,10 +36,22 @@ export default function AdminPage() {
     });
   }, [translations]);
 
-  const handleStatusChange = (userId, newStatus) => {
-    ServiceAdmin.action(userId, newStatus).then((json) => {
+  const handleStatusChange = async (userId, newStatus) => {
+    const response = (async () => {
+      switch (newStatus) {
+        case "approve":
+          return ServiceAdmin.approve(userId);
+        case "ban":
+          return ServiceAdmin.ban(userId);
+        case "delete":
+          return ServiceAdmin.delete(userId);
+      }
+    })();
+
+    response.then((json) => {
+      console.log(json);
       if (json.status === STATUS.SUCCESS) {
-        toast.success(translations?.toast_messages[json?.code || 0]);
+        toast.success(translations?.toast_messages[json?.code || 100]);
         setUsers(json?.content);
         return;
       }
@@ -105,14 +115,29 @@ export default function AdminPage() {
                           {translations.ban}
                         </Button>
                       ) : (
-                        <Button
-                          size="sm"
-                          onClick={() => handleStatusChange(user.id, "approve")}
-                          variant="outline"
-                          className="bg-green-500/10 text-green-500 hover:bg-green-500/20 hover:text-green-500"
-                        >
-                          {translations.unban}
-                        </Button>
+                        <>
+                          <Button
+                            size="sm"
+                            onClick={() =>
+                              handleStatusChange(user.id, "approve")
+                            }
+                            variant="outline"
+                            className="bg-green-500/10 text-green-500 hover:bg-green-500/20 hover:text-green-500"
+                          >
+                            {translations.unban}
+                          </Button>
+
+                          <Button
+                            size="sm"
+                            onClick={() =>
+                              handleStatusChange(user.id, "delete")
+                            }
+                            variant="outline"
+                            className="bg-red-500/10 text-red-500 hover:bg-red-500/20 hover:text-red500"
+                          >
+                            {translations.delete}
+                          </Button>
+                        </>
                       )}
                     </div>
                   </TableCell>

@@ -38,4 +38,16 @@ export default class $api {
       })
     ).json();
   }
+
+  static async delete(url) {
+    return await (
+      await fetch(API_URL + url, {
+        method: "DELETE",
+        headers: {
+          Authorization: getCookie("Authorization"),
+          "Content-Type": "application/json",
+        },
+      })
+    ).json();
+  }
 }

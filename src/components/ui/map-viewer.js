@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "./card";
 import { Map } from "lucide-react";
 import { LanguageContext } from "@/context/LanguageContext";

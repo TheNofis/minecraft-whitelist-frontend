@@ -31,8 +31,6 @@ export default function LoginPage() {
   const { translations } = useContext(LanguageContext);
 
   useEffect(() => {
-    if (!translations?.toast_messages?.length) return;
-
     ServiceAuth.verify().then((json) => {
       if (json.status === STATUS.SUCCESS) router.push("/profile");
       else setIsLoaded(true);
@@ -54,8 +52,8 @@ export default function LoginPage() {
       setIsLoading(false);
 
       if (json.status === STATUS.ERROR)
-        return toast.error(translations?.toast_messages[json?.code || 0]);
-      toast.success(translations?.toast_messages[json?.code || 0]);
+        return toast.error(translations?.toast_messages[json?.code || 200]);
+      toast.success(translations?.toast_messages[json?.code || 100]);
 
       setCookie("Authorization", `Bearer ${json?.content?.token}`);
       router.push("/profile");

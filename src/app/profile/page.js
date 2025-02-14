@@ -69,7 +69,6 @@ function ProfileCard({ user, setIsSkinModalOpen }) {
               width={100}
               height={100}
               className="rounded-lg transition-transform group-hover:scale-105"
-              // className="rounded-lg border-2 border-primary/10"
             />
             <button
               onClick={() => setIsSkinModalOpen(true)}
@@ -259,14 +258,12 @@ export default function ProfilePage() {
   const router = useRouter();
 
   useEffect(() => {
-    if (!translations?.toast_messages?.length) return;
-
     ServiceUser.profile().then((json) => {
       if (json.status === STATUS.SUCCESS) {
         setUser(json?.content);
         return setIsLoading(false);
       } else {
-        toast.error(translations?.toast_messages[json?.code || 0]);
+        toast.error(translations?.toast_messages[json?.code || 200]);
         deleteCookie("Authorization");
         return router.push("/login");
       }

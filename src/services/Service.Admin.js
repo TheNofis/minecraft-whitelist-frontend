@@ -8,9 +8,23 @@ export default class Admin {
       .catch((err) => err);
   }
 
-  static async action(userId, action) {
+  static async approve(userId) {
     return $api
-      .patch(`admin/user/${userId}`, { action })
+      .patch(`admin/user/approve/${userId}`)
+      .then((res) => res)
+      .catch((err) => err);
+  }
+
+  static async ban(userId) {
+    return $api
+      .patch(`admin/user/ban/${userId}`)
+      .then((res) => res)
+      .catch((err) => err);
+  }
+
+  static async delete(userId) {
+    return $api
+      .delete(`admin/user/delete/${userId}`)
       .then((res) => res)
       .catch((err) => err);
   }

@@ -28,7 +28,7 @@ const VerifyModal = ({ email, isOpen, setEmailVerifyModal, translations }) => {
     ServiceAuth.sendEmail(email)
       .then((json) => {
         if (json.status === STATUS.ERROR)
-          return toast.error(translations?.toast_messages[json?.code || 0]);
+          return toast.error(translations?.toast_messages[json?.code || 200]);
 
         toast.success(translations.emailcodesend.replace("{email}", email), {
           autoClose: false,
@@ -54,9 +54,7 @@ const VerifyModal = ({ email, isOpen, setEmailVerifyModal, translations }) => {
         {translations.email_description}
       </span>
 
-      <Button className="" onClick={sendMain}>
-        {translations.email_resend}
-      </Button>
+      <Button onClick={sendMain}>{translations.email_resend}</Button>
     </Modal>
   );
 };
@@ -74,8 +72,6 @@ export default function RegisterPage() {
   const { translations } = useContext(LanguageContext);
 
   useEffect(() => {
-    if (!translations?.toast_messages?.length) return;
-
     ServiceAuth.verify().then((json) => {
       if (json.status === STATUS.SUCCESS) router.push("/profile");
       else setIsLoaded(true);
@@ -104,7 +100,7 @@ export default function RegisterPage() {
     ServiceAuth.register(data).then((json) => {
       setIsLoading(false);
       if (json.status !== STATUS.SUCCESS)
-        return toast.error(translations.toast_messages[json?.code]);
+        return toast.error(translations.toast_messages[json?.code || 200]);
 
       setEmail(data.email);
       setEmailVerifyModal(true);

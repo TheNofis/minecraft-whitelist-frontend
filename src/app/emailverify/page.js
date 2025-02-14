@@ -41,19 +41,17 @@ export function EmailVerifyPageContent() {
   const { translations } = useContext(LanguageContext);
 
   useEffect(() => {
-    if (!translations?.toast_messages?.length) return;
-
     const emailCode = searchParams?.get("emailCode");
     ServiceAuth.emailVerify(emailCode).then((json) => {
       setIsLoading(false);
       if (json.status === STATUS.ERROR) {
         setStatus("error");
-        return toast.error(translations?.toast_messages[json?.code || 0]);
+        return toast.error(translations?.toast_messages[json?.code || 200]);
       }
 
       if (json.status === STATUS.SUCCESS) {
         setStatus("success");
-        toast.success(translations?.toast_messages[json?.code || 0]);
+        toast.success(translations?.toast_messages[json?.code || 100]);
         setCookie("Authorization", `Bearer ${json?.content?.token}`);
         return router.push("/profile");
       }

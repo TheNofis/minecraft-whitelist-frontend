@@ -75,22 +75,31 @@
   "approve": "Aprovar",
   "ban": "Banir",
   "unban": "Desbanir",
+  "delete": "Excluir",
 
   "_comment": "toast",
-  "toast_messages": [
-    "Erro desconhecido",
-    "Usuário não encontrado",
-    "Usuário já registrado",
-    "Registro bem-sucedido",
-    "Login ou senha incorretos",
-    "E-mail não confirmado",
-    "Código de confirmação incorreto",
-    "Mensagem de confirmação foi enviada para o e-mail",
-    "Usuário atualizado",
-    "Erro de conexão com RCON",
-    "Autenticação bem-sucedida",
-    "Token expirado",
-    "Permissões insuficientes",
-    "Skin alterado com sucesso"
-  ]
+  "toast_messages": {
+    "100": "Bem-sucedido",
+    "101": "Cadastro bem-sucedido",
+    "102": "Autenticação bem-sucedida",
+    "103": "Skin alterada com sucesso",
+    "104": "Usuário atualizado",
+    "105": "Usuário rejeitado",
+    "106": "Usuário bloqueado",
+    "107": "Usuário excluído",
+
+    "200": "Erro desconhecido",
+    "201": "Usuário já registrado",
+    "202": "Login ou senha incorretos",
+    "203": "Código de confirmação incorreto",
+    "204": "E-mail não confirmado",
+    "205": "Permissões insuficientes",
+    "207": "Usuário não encontrado",
+    "206": "Erro de conexão com RCON",
+    "208": "Token expirado",
+    "209": "Erro de conexão com RCON",
+
+    "500": "Informação desconhecida",
+    "501": "Mensagem de confirmação foi enviada para o e-mail"
+  }
 }

@@ -9,7 +9,13 @@ export function LanguageProvider({ children }) {
   const [translations, setTranslations] = useState({});
 
   useEffect(() => {
-    const savedLanguage = localStorage.getItem("language") || "en";
+    let savedLanguage = localStorage.getItem("language");
+    if (!savedLanguage || savedLanguage === null) {
+      savedLanguage =
+        (navigator.language || navigator.userLanguage).split("-")[0] || "en";
+      localStorage.setItem("language", savedLanguage);
+    }
+
     setLanguage(savedLanguage);
     loadTranslations(savedLanguage);
   }, []);
@@ -30,7 +36,9 @@ export function LanguageProvider({ children }) {
   };
 
   return (
-    <LanguageContext.Provider value={{ language, translations, changeLanguage }}>
+    <LanguageContext.Provider
+      value={{ language, translations, changeLanguage }}
+    >
       {children}
     </LanguageContext.Provider>
   );

@@ -11,8 +11,10 @@ import {
 } from "./card";
 import { Badge } from "./badge";
 import { Progress } from "./progress";
-import { Vote, ChevronRight } from "lucide-react";
+import { Vote, ChevronRight, Trophy } from "lucide-react";
 import { toast } from "react-toastify";
+
+import { cn } from "@/lib/utils";
 
 import { LanguageContext } from "@/context/LanguageContext";
 
@@ -24,6 +26,7 @@ export default function VoteCard() {
 
   const [isVoted, setIsVoted] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
+  const [isExpired, setIsExpired] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   const [poll, setPoll] = useState({});
@@ -32,11 +35,11 @@ export default function VoteCard() {
   useEffect(() => {
     if (!translations) return;
     ServicePool.polls().then((json) => {
-      console.log(json?.content[0].answers);
       if (json.status === STATUS.SUCCESS) {
         const content = json?.content[0];
         setPoll(content);
         setIsVoted(content.is_voted);
+        setIsExpired(content?.close_ts < Date.now());
         if (content.is_voted) setSelectedOption(content.voted_answer?.id);
 
         return setIsLoading(false);
@@ -82,6 +85,15 @@ export default function VoteCard() {
     return isNaN(percentage) ? 0 : percentage;
   };
 
+  const getWinningOption = () => {
+    if (!isExpired) return null;
+    return poll.answers.reduce((prev, current) =>
+      prev.votes_count > current.votes_count ? prev : current,
+    );
+  };
+
+  const winningOption = getWinningOption();
+
   return (
     <Card className="md:col-span-2">
       <CardHeader>
@@ -106,14 +118,24 @@ export default function VoteCard() {
             <div key={option.id} className="space-y-2">
               <Button
                 variant={selectedOption === option.id ? "default" : "outline"}
-                className="w-full justify-between group relative"
+                className={cn(
+                  "w-full justify-between group relative",
+                  isExpired &&
+                    winningOption?.id === option.id &&
+                    "border-yellow-500 bg-yellow-500/10 hover:bg-yellow-500/20",
+                )}
                 disabled={
-                  isLoading || (isVoted && selectedOption !== option.id)
+                  isLoading ||
+                  isExpired ||
+                  (isVoted && selectedOption !== option.id)
                 }
                 onClick={() => handleVote(option.id)}
               >
                 <span className="flex items-center gap-2">
-                  {option?.local[lang]}
+                  {option?.local && option?.local[lang]}
+                  {isExpired && winningOption?.id === option.id && (
+                    <Trophy className="h-4 w-4 text-yellow-500" />
+                  )}
                   {selectedOption === option.id && isLoading && (
                     <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
                   )}
@@ -121,11 +143,16 @@ export default function VoteCard() {
                 <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </Button>
 
-              {isVoted && (
+              {(isVoted || isExpired) && (
                 <div className="space-y-1 animate-in fade-in-50 duration-500">
                   <Progress
                     value={Number.parseFloat(
                       getVotePercentage(option.votes_count),
+                    )}
+                    className={cn(
+                      isExpired &&
+                        winningOption?.id === option.id &&
+                        "bg-yellow-500/20 [&>[role=progressbar]]:bg-yellow-500",
                     )}
                   />
                   <div className="flex justify-between text-sm text-muted-foreground px-1">

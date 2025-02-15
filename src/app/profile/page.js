@@ -31,6 +31,7 @@ import STATUS from "@/http/status";
 import { LanguageContext } from "@/context/LanguageContext";
 import { deleteCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
+import VoteCard from "@/components/ui/voteCard";
 
 function OnlineIndicator({ isOnline }) {
   return (
@@ -286,6 +287,7 @@ export default function ProfilePage() {
               <div className="grid gap-4 md:grid-cols-2">
                 <ServerInfoCard serverInfo={serverInfo} />
                 <MapViewer />
+                <VoteCard />
                 <StatCard
                   title={translations.playerkills}
                   icon={Sword}

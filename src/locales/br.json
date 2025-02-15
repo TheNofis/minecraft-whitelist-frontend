@@ -79,27 +79,35 @@
 
   "_comment": "toast",
   "toast_messages": {
-    "100": "Bem-sucedido",
-    "101": "Cadastro bem-sucedido",
+    "100": "Sucesso",
+    "101": "Registro bem-sucedido",
     "102": "Autenticação bem-sucedida",
-    "103": "Skin alterada com sucesso",
+    "103": "Skin alterado com sucesso",
     "104": "Usuário atualizado",
     "105": "Usuário rejeitado",
     "106": "Usuário bloqueado",
-    "107": "Usuário excluído",
+    "107": "Usuário removido",
+    "108": "Você votou com sucesso",
+    "109": "Você cancelou seu voto",
+    "110": "Pesquisa criada",
 
     "200": "Erro desconhecido",
     "201": "Usuário já registrado",
-    "202": "Login ou senha incorretos",
-    "203": "Código de confirmação incorreto",
-    "204": "E-mail não confirmado",
+    "202": "Nome de usuário ou senha incorretos",
+    "203": "Código de verificação incorreto",
+    "204": "E-mail não verificado",
     "205": "Permissões insuficientes",
     "207": "Usuário não encontrado",
-    "206": "Erro de conexão com RCON",
+    "206": "Erro ao conectar ao RCON",
     "208": "Token expirado",
-    "209": "Erro de conexão com RCON",
+    "209": "Erro ao conectar ao banco de dados",
+    "210": "Pesquisa não encontrada",
+    "211": "Você já votou",
+    "212": "Usuário não votou",
+    "213": "Resposta não encontrada",
+    "214": "A pesquisa já foi fechada",
 
     "500": "Informação desconhecida",
-    "501": "Mensagem de confirmação foi enviada para o e-mail"
+    "501": "Mensagem de confirmação enviada por e-mail"
   }
 }

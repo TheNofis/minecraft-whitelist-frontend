@@ -60,6 +60,7 @@
   "preview": "Папярэдні прагляд",
   "apply": "Прымяніць",
   "applyinprogress": "Прымяняем...",
+  "timeleft": "Залежыць часу: ",
 
   "_comment": "emailverify",
   "emailverify_title": "Пацвярджэнне пошты",

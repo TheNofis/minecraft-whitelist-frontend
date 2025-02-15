@@ -60,6 +60,7 @@
   "preview": "Предпросмотр",
   "apply": "Применить",
   "applyinprogress": "Применяем...",
+  "timeleft": "Осталось времени: ",
 
   "_comment": "emailverify",
   "emailverify_title": "Подтверждение почты",

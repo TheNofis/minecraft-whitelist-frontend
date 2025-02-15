@@ -60,6 +60,7 @@
   "preview": "Preview",
   "apply": "Apply",
   "applyinprogress": "Applying...",
+  "timeleft": "Left time: ",
 
   "_comment": "emailverify",
   "emailverify_title": "Email Verification",

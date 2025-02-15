@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState, useContext } from "react";
+import { LanguageContext } from "@/context/LanguageContext";
+
 import { Button } from "./button";
 import {
   Card,
@@ -13,10 +15,13 @@ import { Badge } from "./badge";
 import { Progress } from "./progress";
 import { Vote, ChevronRight, Trophy } from "lucide-react";
 import { toast } from "react-toastify";
-
 import { cn } from "@/lib/utils";
 
-import { LanguageContext } from "@/context/LanguageContext";
+import { formatDuration, intervalToDuration } from "date-fns";
+import { ru } from "date-fns/locale";
+import { isPast } from "date-fns";
+import { deleteCookie } from "cookies-next";
+import { router } from "next/router";
 
 import ServicePool from "@/services/Service.Poll";
 import STATUS from "@/http/status";
@@ -28,6 +33,7 @@ export default function VoteCard() {
   const [selectedOption, setSelectedOption] = useState(null);
   const [isExpired, setIsExpired] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [timeRemaining, setTimeRemaining] = useState("");
 
   const [poll, setPoll] = useState({});
   const lang = localStorage.getItem("language");
@@ -50,6 +56,36 @@ export default function VoteCard() {
       }
     });
   }, [translations]);
+
+  useEffect(() => {
+    const updateTimer = () => {
+      const endDate = new Date(poll.endDate);
+
+      if (isPast(endDate)) {
+        setIsExpired(true);
+        setTimeRemaining("");
+        return;
+      }
+
+      const duration = intervalToDuration({
+        start: new Date(),
+        end: endDate,
+      });
+
+      const formattedDuration = formatDuration(duration, {
+        locale: ru,
+        format: ["days", "hours", "minutes", "seconds"],
+        zero: false,
+        delimiter: " ",
+      });
+
+      setTimeRemaining(formattedDuration);
+    };
+
+    updateTimer();
+    const timer = setInterval(updateTimer, 1000);
+    return () => clearInterval(timer);
+  }, [poll.close_ts]);
 
   const handleVote = async (optionId) => {
     setIsLoading(true);
@@ -111,6 +147,17 @@ export default function VoteCard() {
             {poll?.votes_count} голосов
           </Badge>
         </div>
+        {timeRemaining ? (
+          <div className="flex items-center gap-2 mt-4 text-sm text-muted-foreground">
+            <Clock className="h-4 w-4" />
+            <span>Осталось: {timeRemaining}</span>
+          </div>
+        ) : (
+          <div className="flex items-center gap-2 mt-4 text-sm text-yellow-500">
+            <Trophy className="h-4 w-4" />
+            <span>Голосование завершено</span>
+          </div>
+        )}
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
@@ -122,7 +169,7 @@ export default function VoteCard() {
                   "w-full justify-between group relative",
                   isExpired &&
                     winningOption?.id === option.id &&
-                    "border-yellow-500 bg-yellow-500/10 hover:bg-yellow-500/20",
+                    "border-yellow-500 bg-yellow-500/10 hover:bg-yellow-500/20 disabled:opacity-100",
                 )}
                 disabled={
                   isLoading ||

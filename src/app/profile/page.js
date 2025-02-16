@@ -55,12 +55,15 @@ function ProfileCard({ user, setIsSkinModalOpen }) {
 
   return (
     <Card className="relative overflow-hidden">
-      <div className="absolute top-0 right-0 p-4">
-        <Badge variant="outline" className="bg-primary/10">
-          <Signal className="mr-1 h-4 w-4" />
-          {user?.stats?.ping?.average}
-        </Badge>
-      </div>
+      {user?.role !== "unverified" && (
+        <div className="absolute top-0 right-0 p-4">
+          <Badge variant="outline" className="bg-primary/10">
+            <Signal className="mr-1 h-4 w-4" />
+            {user?.stats?.ping?.average}
+          </Badge>
+        </div>
+      )}
+
       <CardContent className="pt-6">
         <div className="flex items-start gap-6">
           <div className="relative group">
@@ -108,11 +111,13 @@ function ProfileCard({ user, setIsSkinModalOpen }) {
               </Badge>
               <Badge variant="outline" className="bg-primary/10">
                 <Timer className="mr-1 h-4 w-4" />
-                {translations.playtime}: {user?.stats?.online_activity?.total}
+                {translations.playtime}:{" "}
+                {user?.stats?.online_activity?.total || 0}
               </Badge>
               <Badge variant="outline" className="bg-primary/10">
                 <Users className="mr-1 h-4 w-4" />
-                {translations.sessions}: {user?.stats?.session_count?.total}
+                {translations.sessions}:{" "}
+                {user?.stats?.session_count?.total || 0}
               </Badge>
             </div>
 
@@ -286,8 +291,8 @@ export default function ProfilePage() {
             <div className="grid gap-4">
               <div className="grid gap-4 md:grid-cols-2">
                 <ServerInfoCard serverInfo={serverInfo} />
-                <MapViewer />
                 <VoteCard />
+                <MapViewer />
                 <StatCard
                   title={translations.playerkills}
                   icon={Sword}

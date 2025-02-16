@@ -63,7 +63,7 @@ export default function RegisterPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  const [emailVerifyModal, setEmailVerifyModal] = useState(true);
+  const [emailVerifyModal, setEmailVerifyModal] = useState(false);
 
   const [email, setEmail] = useState("");
 

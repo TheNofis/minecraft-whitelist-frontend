@@ -42,6 +42,8 @@ export function EmailVerifyPageContent() {
 
   useEffect(() => {
     const emailCode = searchParams?.get("emailCode");
+    if (!emailCode || emailCode == null) return;
+
     ServiceAuth.emailVerify(emailCode).then((json) => {
       setIsLoading(false);
       if (json.status === STATUS.ERROR) {

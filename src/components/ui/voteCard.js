@@ -20,8 +20,6 @@ import { cn } from "@/lib/utils";
 import { formatDuration, intervalToDuration } from "date-fns";
 import { be, br, en, ru, ua } from "date-fns/locale";
 import { isPast } from "date-fns";
-import { deleteCookie } from "cookies-next";
-import { router } from "next/router";
 
 import ServicePool from "@/services/Service.Poll";
 import STATUS from "@/http/status";
@@ -55,13 +53,8 @@ export default function VoteCard() {
         setIsVoted(content?.is_voted);
         setIsExpired(content?.close_ts < Date.now());
         if (content?.is_voted) setSelectedOption(content.voted_answer?.id);
-
         return setIsLoading(false);
-      } else {
-        toast.error(translations?.toast_messages[json?.code || 200]);
-        deleteCookie("Authorization");
-        return router.push("/login");
-      }
+      } else toast.error(translations?.toast_messages[json?.code || 200]);
     });
   }, [translations]);
 

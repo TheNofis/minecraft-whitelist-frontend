@@ -20,6 +20,21 @@ import { toast } from "react-toastify";
 
 import { LanguageContext } from "@/context/LanguageContext";
 
+const SecretEmail = ({ email }) => {
+  const [state, setState] = useState(false);
+  return (
+    <div className="cursor-pointer" onClick={() => setState((prev) => !prev)}>
+      {state ? (
+        email
+      ) : (
+        <Badge variant="outline" className="px-20 py-2">
+          SECRET
+        </Badge>
+      )}
+    </div>
+  );
+};
+
 export default function AdminPage() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [users, setUsers] = useState([]);
@@ -77,7 +92,9 @@ export default function AdminPage() {
                 <TableRow key={user.id}>
                   <TableCell>{user?.profile?.username}</TableCell>
                   <TableCell>{user?.profile?.ingamename || "-"}</TableCell>
-                  <TableCell>{user?.profile?.email}</TableCell>
+                  <TableCell>
+                    <SecretEmail email={user?.profile?.email} />
+                  </TableCell>
                   <TableCell>
                     <Badge
                       variant={

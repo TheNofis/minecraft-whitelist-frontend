@@ -43,6 +43,7 @@ export default function AdminPage() {
   const { translations } = useContext(LanguageContext);
 
   useEffect(() => {
+    if (!translations?.state_loaded) return;
     ServiceAdmin.users().then((json) => {
       if (json.status === STATUS.SUCCESS) {
         setUsers(json?.content);

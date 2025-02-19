@@ -41,6 +41,7 @@ export function EmailVerifyPageContent() {
   const { translations } = useContext(LanguageContext);
 
   useEffect(() => {
+    if (!translations?.state_loaded || !searchParams) return;
     const emailCode = searchParams?.get("emailCode");
     if (
       !emailCode ||

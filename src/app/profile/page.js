@@ -264,6 +264,7 @@ export default function ProfilePage() {
   const router = useRouter();
 
   useEffect(() => {
+    if (!translations?.state_loaded) return;
     ServiceUser.profile().then((json) => {
       if (json.status === STATUS.SUCCESS) {
         setUser(json?.content);

@@ -7,6 +7,7 @@
   "success": "Успішно",
   "changelanguage": "Змінити мову",
   "cancel": "Скасувати",
+  "state_loaded": true,
 
   "_comment": "main_page",
   "welcome": "Приватний Minecraft сервер",

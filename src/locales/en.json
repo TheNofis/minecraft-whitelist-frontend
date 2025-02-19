@@ -7,6 +7,7 @@
   "success": "Success",
   "changelanguage": "Change language",
   "cancel": "Cancel",
+  "state_loaded": true,
 
   "_comment": "main_page",
   "welcome": "Private Minecraft Server",

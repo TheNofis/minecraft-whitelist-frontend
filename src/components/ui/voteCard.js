@@ -50,7 +50,7 @@ export default function VoteCard() {
     if (!translations) return;
     ServicePool.polls().then((json) => {
       if (json.status === STATUS.SUCCESS) {
-        const content = json?.content[0];
+        const content = json?.content.at(-1);
         setPoll(content);
         setIsVoted(content?.is_voted);
         setIsExpired(content?.close_ts < Date.now());
@@ -181,6 +181,7 @@ export default function VoteCard() {
                     isExpired &&
                       winningOption?.id === option.id &&
                       "border-yellow-500 bg-yellow-500/10 hover:bg-yellow-500/20 disabled:opacity-100",
+                    isExpired && "text-foreground",
                   )}
                   disabled={
                     isLoading ||
@@ -200,7 +201,6 @@ export default function VoteCard() {
                   </span>
                   <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                 </Button>
-
                 {(isVoted || isExpired) && (
                   <div className="space-y-1 animate-in fade-in-50 duration-500">
                     <Progress

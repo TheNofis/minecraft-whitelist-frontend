@@ -26,7 +26,7 @@ import { router } from "next/router";
 import ServicePool from "@/services/Service.Poll";
 import STATUS from "@/http/status";
 
-const langs = {
+const locales = {
   be,
   br,
   en,
@@ -66,27 +66,21 @@ export default function VoteCard() {
   }, [translations]);
 
   useEffect(() => {
+    if (!poll?.close_ts) return;
+
     const updateTimer = () => {
       const endDate = new Date(poll.close_ts);
+      if (isPast(endDate)) return setTimeRemaining("");
 
-      if (isPast(endDate)) {
-        setIsExpired(true);
-        setTimeRemaining("");
-        return;
-      }
-
-      const duration = intervalToDuration({
-        start: new Date(),
-        end: endDate,
-      });
-
-      const formattedDuration = formatDuration(duration, {
-        locale: langs[lang],
-        format: ["days", "hours", "minutes", "seconds"],
-        zero: false,
-        delimiter: " ",
-      });
-      setTimeRemaining(formattedDuration);
+      const duration = intervalToDuration({ start: new Date(), end: endDate });
+      setTimeRemaining(
+        formatDuration(duration, {
+          locale: locales[lang],
+          format: ["days", "hours", "minutes", "seconds"],
+          zero: false,
+          delimiter: " ",
+        }),
+      );
     };
 
     updateTimer();
@@ -96,7 +90,7 @@ export default function VoteCard() {
 
   const handleVote = async (optionId) => {
     setIsLoading(true);
-    if (isVoted) {
+    if (isVoted)
       ServicePool.unvote(poll.id, optionId).then((json) => {
         if (json.status === STATUS.SUCCESS) {
           setPoll(json?.content);
@@ -106,7 +100,7 @@ export default function VoteCard() {
           return setSelectedOption(null);
         } else toast.error(translations?.toast_messages[json?.code || 200]);
       });
-    } else {
+    else
       ServicePool.vote(poll.id, optionId).then((json) => {
         if (json.status === STATUS.SUCCESS) {
           setPoll(json?.content);
@@ -116,17 +110,13 @@ export default function VoteCard() {
           return setSelectedOption(optionId);
         } else toast.error(translations?.toast_messages[json?.code || 200]);
       });
-    }
 
     setSelectedOption(optionId);
-
     setIsVoted(true);
   };
 
-  const getVotePercentage = (votes) => {
-    const percentage = ((votes / poll?.votes_count) * 100).toFixed(1);
-    return isNaN(percentage) ? 0 : percentage;
-  };
+  const getVotePercentage = (votes) =>
+    ((votes / poll.votes_count) * 100).toFixed(1);
 
   const getWinningOption = () => {
     if (!isExpired) return null;

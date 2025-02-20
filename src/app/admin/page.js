@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useContext } from "react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -91,7 +92,18 @@ export default function AdminPage() {
             <TableBody>
               {users.map((user) => (
                 <TableRow key={user.id}>
-                  <TableCell>{user?.profile?.username}</TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-2">
+                      <Image
+                        src={`https://minotar.net/helm/${user?.profile?.avatar || user?.profile?.username}/100.png`}
+                        alt={user?.profile?.avatar || user?.profile?.username}
+                        width={32}
+                        height={32}
+                        className="rounded-lg transition-transform group-hover:scale-105"
+                      />
+                      <span>{user?.profile?.username}</span>
+                    </div>
+                  </TableCell>
                   <TableCell>{user?.profile?.ingamename || "-"}</TableCell>
                   <TableCell>
                     <SecretEmail email={user?.profile?.email} />

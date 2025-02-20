@@ -8,6 +8,13 @@ export default class User {
       .catch((err) => err);
   }
 
+  static async getProfile(username) {
+    return $api
+      .get(`user/profile/${username}`)
+      .then((res) => res)
+      .catch((err) => err);
+  }
+
   static async changeskin(skin) {
     return $api
       .patch(`user/changeskin`, { skin })

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useContext } from "react";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -13,9 +12,7 @@ import {
   Signal,
   Users,
   Ghost,
-  User,
 } from "lucide-react";
-import { SkinPickerModal } from "@/components/ui/skin-picker-modal";
 
 import { toast } from "react-toastify";
 
@@ -43,7 +40,7 @@ function OnlineIndicator({ isOnline }) {
   );
 }
 
-function ProfileCard({ user, setIsSkinModalOpen }) {
+function ProfileCard({ user }) {
   const { translations } = useContext(LanguageContext);
 
   return (
@@ -67,12 +64,6 @@ function ProfileCard({ user, setIsSkinModalOpen }) {
               height={100}
               className="rounded-lg transition-transform group-hover:scale-105"
             />
-            <button
-              onClick={() => setIsSkinModalOpen(true)}
-              className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity rounded-lg"
-            >
-              <User className="w-6 h-6" />
-            </button>
             <OnlineIndicator isOnline={user.stats?.online} />
           </div>
           <div className="space-y-1 flex-1">
@@ -182,13 +173,11 @@ export default function UserProfile({ username }) {
     });
   }, [translations]);
 
-  const [isSkinModalOpen, setIsSkinModalOpen] = useState(false);
-
   return (
     !isLoading && (
       <main className="container max-w-4xl mx-auto py-10">
         <div className="grid gap-6">
-          <ProfileCard user={user} setIsSkinModalOpen={setIsSkinModalOpen} />
+          <ProfileCard user={user} />
           {user?.role !== "unverified" && (
             <div className="grid gap-4">
               <div className="grid gap-4 md:grid-cols-2">
@@ -226,12 +215,6 @@ export default function UserProfile({ username }) {
             </div>
           )}
         </div>
-
-        <SkinPickerModal
-          isOpen={isSkinModalOpen}
-          onClose={() => setIsSkinModalOpen(false)}
-          currentUsername={user?.profile?.avatar || user?.profile?.username}
-        />
       </main>
     )
   );

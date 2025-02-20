@@ -54,7 +54,7 @@ export function SkinPickerModal({ isOpen, onClose, currentUsername }) {
         <div className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="username">{translations.skin_name}</Label>
-            <span className="text-sm text-muted-foreground">
+            <span className="text-sm text-muted-foreground block">
               {translations.skin_description}
             </span>
             <div className="flex gap-2">

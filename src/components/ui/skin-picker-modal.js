@@ -53,7 +53,10 @@ export function SkinPickerModal({ isOpen, onClose, currentUsername }) {
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="username">{translations.minecraft_username}</Label>
+            <Label htmlFor="username">{translations.skin_name}</Label>
+            <span className="text-sm text-muted-foreground">
+              {translations.skin_description}
+            </span>
             <div className="flex gap-2">
               <Input
                 id="username"

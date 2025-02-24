@@ -11,21 +11,21 @@ export const metadata = {
   viewport: "width=device-width, initial-scale=1",
   description: `Присоединяйтесь к Mine And Tee
 
-Это приватному серверу Minecraft, где вы можете наслаждаться игрой с друзьями в уютной и дружелюбной атмосфере.
-Наш сервер имеет большое количество игроков, с которыми вы cможете приятно проводить время.`
+Это приватный серверу Minecraft, где вы можете наслаждаться игрой с друзьями в уютной и дружелюбной атмосфере.
+Наш сервер имеет большое количество игроков, с которыми вы cможете приятно проводить время.`,
 };
 
 export default async function RootLayout({ children }) {
   return (
     <html lang="en" className="dark">
-      <meta property="og:image" content="https://mineandtee.fun/logo.png"/>
+      <meta property="og:image" content="https://mineandtee.fun/logo.png" />
       <body
         className={`${inter.className} min-h-screen bg-background text-foreground`}
       >
         <LanguageProvider>
           <ToastContainer theme="dark" autoClose={3000} />
           {children}
-          <LanguageSwitch/>
+          <LanguageSwitch />
         </LanguageProvider>
       </body>
     </html>
